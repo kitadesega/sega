@@ -1,0 +1,454 @@
+
+body {
+	font-family:Osaka,verdana,Tahoma ;
+	
+}
+
+img {
+	border:0;
+}
+
+ul {
+	list-style:none;
+}
+a{
+    font-size:16px;
+    
+}
+a.disabled{
+    pointer-events: none;
+    text-decoration: none;
+}
+@media (min-width: 1200px) {
+    .custom-container {
+      max-width: 960px;
+    }
+}
+#container {
+	width:;
+	margin:0 auto;
+	border:solid #ccc;
+	border-width:0 1px;
+    background-color:;
+    
+}
+
+/* �w�b�_ */
+#header {
+	width:100%;
+	/*min-height:47px;*/
+	height:auto !important;
+	height:1200px;
+	background:#eee;
+}
+
+#header h1 {
+	
+	padding:30px 10px 15px;
+	font-size:120%;
+	float:left;
+	line-height:1em;
+}
+
+#header ul {
+	margin:0;
+	padding:8px 10px 3px 10px;
+	font-size:70%;
+	text-align:right;
+}
+
+#header li {
+	margin:0 0 5px 0;
+	line-height:1.32em;
+}
+
+#header div {
+	min-height:17px;
+	height:auto !important;
+	height:17px;
+	padding:8px;
+	color:#000;
+	background:#fff;
+	font-size:80%;
+	text-align:center;
+	line-height:1.32em;
+	clear:both;
+}
+
+#header a {
+	color:#3366cc;
+	text-decoration:none;
+}
+
+#header a:hover {
+	color:#cc0000;
+}
+
+/* �R���e���g */
+#content {
+	width:620px;
+	float:right;
+}
+
+#content h2 {
+	margin:0 10px 10px;
+	padding:5px;
+	color:#fff;
+	background:#000;
+	font-size:95%;
+	line-height:1em;
+}
+
+#content ul {
+	min-height:200px;
+	height:auto !important;
+	height:200px;
+	margin:0 10px;
+	padding:0;
+}
+
+#content li {
+	margin:10px 0;
+	font-size:80%;
+	line-height:1.32em;
+}
+
+/* �i�r */
+#navi {
+ float:left;
+}
+#navi h3 {
+ margin:0;
+}
+
+#navi .menu {
+ width:158px;
+ margin:0 10px 10px;
+ border:1px solid #333;
+}
+
+#navi .menu p {
+ margin:5px 8px;
+ font-size:80%;
+ line-height:1.32em;
+}
+
+#navi .submenu {
+ width:158px;
+ margin:10px;
+ border:1px solid #333;
+}
+
+#navi .submenu p {
+ margin:5px 8px;
+ font-size:80%;
+ line-height:1.32em;
+}
+
+/* �t�b�^ */
+#footer {
+	width:100%;
+	clear:both;
+}
+
+#footer p {
+	margin:0;
+	padding:3px 5px;
+	color:#fff;
+	background:#000;
+	font-size:65%;
+	text-align:right;
+	line-height:1.32em;
+	font-family:verdana;
+}
+
+#footer a {
+	color:#fff;
+	text-decoration:none;
+}
+.square_btn{
+    border-radius: 15px 15px 15px 15px;
+    position: relative;
+    display: inline-block;
+    font-weight: bold;
+    padding: 0.25em 0.5em;
+    text-decoration: none;
+    color: #00BCD4;
+    background: #ECECEC;
+    transition: .4s;
+  }
+
+.square_btn:hover {
+    background: #00bcd4;
+    color: white;
+}
+
+.fa-caret-right:before {
+  content: "\f0da";
+}
+.low{
+    color:goldenrod;
+}
+
+
+/* テキストエリア、送信ボタン④ */
+#bms_send {
+    background-color:#eee;/*タイムラインの色と同じにする*/
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    height: 48px;
+    padding: 4px;
+}
+    #bms_send_message{
+        width: calc(100% - 150px);/*常に送信ボタンの横幅を引いたサイズに動的に計算*/
+        line-height: 16px;
+        height: 48px;
+        padding: 3px 6px 0px 6px;/*文字がテキストエリアの中心になる様に隙間調整*/
+        border: 1px solid #ccc;
+        border-radius: 4px;/*角丸*/
+        text-align: left;/*文字を左寄せ*/
+        box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.2) inset;/*内側に影を入れてテキストエリアらしくした*/
+        box-sizing: border-box;/*paddingとborderの要素の高さと幅の影響をなくす（要素に高さと幅を含める）*/
+
+    }
+    #bms_send_btn {
+        width: 72px;
+        height: 48px;
+        font-size: 16px;
+        line-height: 3em;
+        float: right;/*bms_sendに対して右寄せ*/
+        margin-right:75px;
+        color: #fff;
+        font-weight: bold;
+        background: #bcbcbc;
+        text-align: center;/*文字をボタン中央に表示*/
+        border: 1px solid #bbb;
+        border-radius: 4px;/*角丸*/
+        box-sizing: border-box;/*paddingとborderの要素の高さと幅の影響をなくす（要素に高さと幅を含める）*/
+    }
+#bms_send_btn2 {
+        width: 72px;
+        height: 48px;
+        font-size: 16px;
+        line-height: 3em;
+        float: right;/*bms_sendに対して右寄せ*/
+    margin-top:-48px;
+        color: #fff;
+        font-weight: bold;
+        background: #bcbcbc;
+        text-align: center;/*文字をボタン中央に表示*/
+        border: 1px solid #bbb;
+        border-radius: 4px;/*角丸*/
+        box-sizing: border-box;/*paddingとborderの要素の高さと幅の影響をなくす（要素に高さと幅を含める）*/
+    }
+    #bms_send_btn:hover,#bms_send_btn2:hover {
+        background: #13178E; /*マウスポインタを当てた時にアクティブな色になる*/
+        cursor: pointer;/*マウスポインタを当てた時に、カーソルが指の形になる*/
+    }
+ /*
+         *追加
+         */
+        .bms_message_box{
+            margin-top: 20px;/*上下の吹き出しがひっつかない様に隙間を入れる*/
+            max-width: 100%;/*文字が長くなった時に吹き出しがタイムラインからはみ出さない様にする*/
+            font-size: 16px;
+        }
+            /*
+            *追加
+            */
+            .bms_message_content{
+                padding: 20px;/*文字や画像（コンテンツ）の外側に隙間を入れる*/
+            }
+
+        /* メッセージ１（左側） */
+        .bms_left {
+            float: left;/*吹き出しをbms_messagesに対して左寄せ*/
+            line-height: 1.3em;
+        }
+            /*
+            *追加
+            */
+            .bms_left .bms_message_box {
+                color: #333;/*テキストを黒にする*/
+                background: #fff;
+                border: 2px solid #13178E;
+                border-radius: 30px 30px 30px 0px;/*左下だけ尖らせて吹き出し感を出す*/
+                margin-right: 50px;/*左側の発言だとわかる様に、吹き出し右側に隙間を入れる*/
+            }
+
+        /* メッセージ２（右側） */
+        .bms_right {
+            float: right;/*吹き出しをbms_messagesに対して右寄せ*/
+            line-height: 1.3em;
+        }
+            
+            *追加
+          
+            .bms_right .bms_message_box {
+                color: #fff;/*テキストを白にする
+                background: #13178E;
+                border: 2px solid #13178E;
+                border-radius: 30px 30px 0px 30px;/*右下だけ尖らせて吹き出し感を出す
+                margin-left: 50px;/*右側の発言だとわかる様に、吹き出し左側に隙間を入れる*/
+            }
+
+/*チャットのテキストの奴だよ*/
+
+.unko{
+	font-size:16px;
+	color:black;
+}
+
+
+/*.line__container {
+	padding:0;
+	background: ;
+	overflow: hidden;
+	max-width: 400px;
+	margin: 20px auto;
+	font-size: 80%;
+  }*/
+  
+  /* タイトル部分 */
+  .line__container .line__title {
+	background: #273246;
+	padding: 10px;
+	text-align: center;
+	font-size: 150%;
+	color: #ffffff;
+  }
+  
+  /* 会話部分 */
+  .line__container .line__contents {
+	padding: 10px;
+	overflow: hidden;
+	line-height: 135%;
+  }
+  
+  .line__container .scroll {
+	height: 900px;
+	overflow-y: scroll;
+  }
+  
+  /* スタンプ画像最大幅 */
+  .line__container .stamp img {
+	max-width:150px;
+  }
+  
+  /* 相手の会話 */
+  .line__container .line__left {
+	  width: 100%;
+	  position: relative;
+	  display: block;
+	  margin-bottom: 35px;
+	  max-width: 80%;
+	  clear: both;
+  }
+  
+  /* アイコン画像 */
+  .line__container .line__left figure {
+	  width: 80px;
+	  position: absolute;
+	  top: -5px;
+	  left: 0;
+	  padding: 0;
+	  margin: 0;
+  
+  }
+  
+  /* 正方形を用意 */
+  .line__container .line__left figure img{
+	  border-radius: 50%;
+	  width: 65px;
+	  height: 65px;
+  }
+  
+  .line__container .line__left .line__left-text {
+  
+	margin-left: 100px;
+  }
+  
+  .line__container .line__left .line__left-text .name {
+	font-size: 80%;
+	color: #ffffff;
+  }
+  
+  /* コメントエリア */
+  .line__container .line__left .text {
+	margin: 0;
+	position: relative;
+	padding: 10px;
+	border-radius: 20px;
+	background-color: #ffffff;
+  }
+  
+  /* 吹き出し */
+  .line__container .line__left .text::after {
+	content: '';
+	position: absolute;
+	display: block;
+	width: 0;
+	height: 0;
+	left: -10px;
+	top: 10px;
+	border-right: 20px solid #ffffff;
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+  }
+  
+  /* 自分の会話 */
+  .line__container .line__right {
+	  position: relative;
+	  display: block;
+	  margin: 5px 0;
+	  max-width: 75%;
+	  float: right;
+	  margin-right: 15px;
+	  clear: both;
+  }
+  
+  /* コメントエリア */
+  .line__container .line__right .text {
+	padding: 10px;
+	border-radius: 20px;
+	background-color: #8de055;
+	margin: 0;
+	margin-left: 80px;
+  }
+  
+  /* 吹き出し */
+  .line__container .line__right .text::after {
+	content: '';
+	position: absolute;
+	display: block;
+	width: 0;
+	height: 0;
+	right: -10px;
+	top: 10px;
+	border-left: 20px solid #8de055;
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+  }
+  
+  /* 自分がスタンプを送る時 */
+  .line__container .line__right .stamp {
+	position: relative;
+	margin-left: 80px;
+  }
+  
+  /* 既読エリア */
+  .line__container .line__right .date {
+	content: '';
+	position: absolute;
+	display: block;
+	width: 100px;
+	text-align: right;
+	left: -30px;
+	bottom: 0px;
+	font-size: 80%;
+	color: #ffffff;
+  }
+  
+  
+  

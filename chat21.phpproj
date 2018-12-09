@@ -1,0 +1,201 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Name>chat21</Name>
+    <ProjectGuid>{5c2520aa-930e-48f5-8919-3cc2ed9a2e8e}</ProjectGuid>
+    <RootNamespace>
+    </RootNamespace>
+    <OutputType>Library</OutputType>
+    <ProjectTypeGuids>{A0786B88-2ADB-4C21-ABE8-AA2D79766269}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <IncludeDebugInformation>true</IncludeDebugInformation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <IncludeDebugInformation>false</IncludeDebugInformation>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include=".vs\chat21\v15\.suo" />
+    <Compile Include=".vs\config\applicationhost.config" />
+    <Compile Include=".vs\slnx.sqlite" />
+    <Compile Include="admin\css\114514810.css" />
+    <Compile Include="admin\css\bootstrap.css" />
+    <Compile Include="admin\css\bootstrap.min.css" />
+    <Compile Include="admin\css\css.php" />
+    <Compile Include="admin\css\round-about.css" />
+    <Compile Include="admin\css\style.css" />
+    <Compile Include="admin\css\top.css" />
+    <Compile Include="admin\parts\footer.php" />
+    <Compile Include="admin\parts\head.php" />
+    <Compile Include="admin\parts\header.php" />
+    <Compile Include="admin\vendor\bootstrap\css\bootstrap-grid.css" />
+    <Compile Include="admin\vendor\bootstrap\css\bootstrap-grid.min.css" />
+    <Compile Include="admin\vendor\bootstrap\css\bootstrap-reboot.css" />
+    <Compile Include="admin\vendor\bootstrap\css\bootstrap-reboot.min.css" />
+    <Compile Include="admin\vendor\bootstrap\css\bootstrap.css" />
+    <Compile Include="admin\vendor\bootstrap\css\bootstrap.css.map" />
+    <Compile Include="admin\vendor\bootstrap\css\bootstrap.min.css" />
+    <Compile Include="admin\vendor\bootstrap\css\bootstrap.min.css.map" />
+    <Compile Include="admin\vendor\bootstrap\js\bootstrap.bundle.js" />
+    <Compile Include="admin\vendor\bootstrap\js\bootstrap.bundle.js.map" />
+    <Compile Include="admin\vendor\bootstrap\js\bootstrap.bundle.min.js" />
+    <Compile Include="admin\vendor\bootstrap\js\bootstrap.bundle.min.js.map" />
+    <Compile Include="admin\vendor\bootstrap\js\bootstrap.js" />
+    <Compile Include="admin\vendor\bootstrap\js\bootstrap.js.map" />
+    <Compile Include="admin\vendor\bootstrap\js\bootstrap.min.js" />
+    <Compile Include="admin\vendor\bootstrap\js\bootstrap.min.js.map" />
+    <Compile Include="admin\vendor\jquery\jquery.js" />
+    <Compile Include="admin\vendor\jquery\jquery.min.js" />
+    <Compile Include="admin\vendor\jquery\jquery.min.map" />
+    <Compile Include="admin\vendor\jquery\jquery.slim.js" />
+    <Compile Include="admin\vendor\jquery\jquery.slim.min.js" />
+    <Compile Include="admin\vendor\jquery\jquery.slim.min.map" />
+    <Compile Include="admin\vendor\.gitignore" />
+    <Compile Include="admin\vendor\.travis.yml" />
+    <Compile Include="admin\vendor\gulpfile.js" />
+    <Compile Include="admin\vendor\LICENSE" />
+    <Compile Include="admin\vendor\package-lock.json" />
+    <Compile Include="admin\vendor\package.json" />
+    <Compile Include="admin\.gitignore" />
+    <Compile Include="admin\.travis.yml" />
+    <Compile Include="admin\admin_index.php" />
+    <Compile Include="admin\admin_register.php" />
+    <Compile Include="admin\alldisp.php" />
+    <Compile Include="admin\chatlog.php" />
+    <Compile Include="admin\chatlog_disp.php" />
+    <Compile Include="admin\Contact.php" />
+    <Compile Include="admin\file.php" />
+    <Compile Include="admin\footer.php" />
+    <Compile Include="admin\gulpfile.js" />
+    <Compile Include="admin\header.php" />
+    <Compile Include="admin\index.php" />
+    <Compile Include="admin\LICENSE" />
+    <Compile Include="admin\package-lock.json" />
+    <Compile Include="admin\package.json" />
+    <Compile Include="admin\README.md" />
+    <Compile Include="admin\tag_change.php" />
+    <Compile Include="admin\tag_changeex.php" />
+    <Compile Include="admin\tag_join.php" />
+    <Compile Include="admin\user_change.php" />
+    <Compile Include="css\114514810.css" />
+    <Compile Include="css\bootstrap.css" />
+    <Compile Include="css\bootstrap.min.css" />
+    <Compile Include="css\style.css" />
+    <Compile Include="css\top.css" />
+    <Compile Include="img\3Qwln.png" />
+    <Compile Include="img\back.jpg" />
+    <Compile Include="img\contest_2017_01.jpg" />
+    <Compile Include="img\contest_2017_03.jpg" />
+    <Compile Include="img\contest_2017_04.jpg" />
+    <Compile Include="img\contest_2017_07.jpg" />
+    <Compile Include="img\contest_2017_08.jpg" />
+    <Compile Include="img\contest_2018_03.jpg" />
+    <Compile Include="img\cureamour.jpg" />
+    <Compile Include="img\cureyell.jpg" />
+    <Compile Include="img\default.png" />
+    <Compile Include="img\GEDQw.png" />
+    <Compile Include="img\gh.png" />
+    <Compile Include="img\GkgaP.png" />
+    <Compile Include="img\head.jpg" />
+    <Compile Include="img\hirameki_woman.png" />
+    <Compile Include="img\huzihuzi.jpg" />
+    <Compile Include="img\I9RhD.png" />
+    <Compile Include="img\icon.png" />
+    <Compile Include="img\image.jpg" />
+    <Compile Include="img\IRnfM.png" />
+    <Compile Include="img\it.jpg" />
+    <Compile Include="img\KLWPv.png" />
+    <Compile Include="img\kv_img.png" />
+    <Compile Include="img\nWm6z.png" />
+    <Compile Include="img\OcJnr.jpg" />
+    <Compile Include="img\PPntl.jpg" />
+    <Compile Include="img\q1nSk.png" />
+    <Compile Include="img\s@40s.jpg" />
+    <Compile Include="img\s@40s.png" />
+    <Compile Include="img\sega.jpg" />
+    <Compile Include="img\sega.png" />
+    <Compile Include="img\sgrs38.jpg" />
+    <Compile Include="img\sgrs38.png" />
+    <Compile Include="img\SqmsZ.jpg" />
+    <Compile Include="img\SuDYb.png" />
+    <Compile Include="img\tDexh.jpg" />
+    <Compile Include="img\thhwG.png" />
+    <Compile Include="img\unko.png" />
+    <Compile Include="img\usIVR.png" />
+    <Compile Include="img\vcesZ.jpg" />
+    <Compile Include="img\Y1o4e.png" />
+    <Compile Include="img\キュアマシェリ.jpg" />
+    <Compile Include="js\ajax.js" />
+    <Compile Include="js\bootstrap.bundle.js" />
+    <Compile Include="js\bootstrap.bundle.js.map" />
+    <Compile Include="js\bootstrap.bundle.min.js" />
+    <Compile Include="js\bootstrap.bundle.min.js.map" />
+    <Compile Include="js\bootstrap.js" />
+    <Compile Include="js\bootstrap.js.map" />
+    <Compile Include="js\bootstrap.min.js" />
+    <Compile Include="js\bootstrap.min.js.map" />
+    <Compile Include="js\jquery-3.3.1.min.js" />
+    <Compile Include="js\n+ân+ómn+ân++[n+ân+ógn+ân+óun+ân+óbn+ân+óNn+ân+¬t½òn+ín+ân+¿Jn+ân+¬n+én+í.onetoc2" />
+    <Compile Include="js\npm.js" />
+    <Compile Include="parts\css.php" />
+    <Compile Include="parts\function.php" />
+    <Compile Include="parts\header.php" />
+    <Compile Include="parts\menu.php" />
+    <Compile Include="parts\mysqlenv.php" />
+    <Compile Include="svg\chat.svg" />
+    <Compile Include="svg\file.svg" />
+    <Compile Include="svg\haguruma.svg" />
+    <Compile Include="svg\home.svg" />
+    <Compile Include="svg\search.svg" />
+    <Compile Include="svg\twitter-bubble.svg" />
+    <Compile Include="svg\twitter-heart.svg" />
+    <Compile Include="svg\twitter-heartON.svg" />
+    <Compile Include="svg\twitter-logo.svg" />
+    <Compile Include="svg\twitter-loop.svg" />
+    <Compile Include="admin.php" />
+    <Compile Include="afterU.php" />
+    <Compile Include="ajax.php" />
+    <Compile Include="chat.php" />
+    <Compile Include="chatin.php" />
+    <Compile Include="chat_db (2).sql" />
+    <Compile Include="chat_edit.php" />
+    <Compile Include="chat_list.php" />
+    <Compile Include="chat_search.php" />
+    <Compile Include="Contact.php" />
+    <Compile Include="function.php" />
+    <Compile Include="home.php" />
+    <Compile Include="home_change.php" />
+    <Compile Include="home_tab2.php" />
+    <Compile Include="home_tab3.php" />
+    <Compile Include="index.php" />
+    <Compile Include="output.php" />
+    <Compile Include="outputmedia.php" />
+    <Compile Include="output_upload.php" />
+    <Compile Include="profile.php" />
+    <Compile Include="register.php" />
+    <Compile Include="tagdisp.php" />
+    <Compile Include="upload.php" />
+    <Compile Include="userlist.php" />
+    <Compile Include="user_search.php" />
+    <Compile Include="_htaccess" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include=".vs\chat21\v15" />
+    <Folder Include=".vs\chat21" />
+    <Folder Include=".vs\config" />
+    <Folder Include=".vs" />
+    <Folder Include="admin\css" />
+    <Folder Include="admin\parts" />
+    <Folder Include="admin\vendor\bootstrap\css" />
+    <Folder Include="admin\vendor\bootstrap\js" />
+    <Folder Include="admin\vendor\bootstrap" />
+    <Folder Include="admin\vendor\jquery" />
+    <Folder Include="admin\vendor" />
+    <Folder Include="admin" />
+    <Folder Include="css" />
+    <Folder Include="img" />
+    <Folder Include="js" />
+    <Folder Include="parts" />
+    <Folder Include="svg" />
+  </ItemGroup>
+</Project>
