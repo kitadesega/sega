@@ -89,7 +89,6 @@ if (isset($_POST['tagedit'])) {
 <?php include 'parts/header.php'; ?>
     <div class="container">
         <div class="row">
-
             <div class="col-xs-12 col-md-7">
                 <div class="panel panel-info">
                     <div class="panel-heading">
@@ -129,7 +128,8 @@ if (isset($_POST['tagedit'])) {
                                         </tr>
                                     <?php endfor; ?>
                                 </tbody>
-                            </table> </div><div class="button_wrapper">
+                            </table>
+                        </div><div class="button_wrapper">
                                 <button type="submit" class="btn btn-info">保存</button>
                         </form></div><br/>
                     <form class="form-inline" method="POST" action="tagdisp.php">

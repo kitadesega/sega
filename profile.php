@@ -241,9 +241,75 @@ while ($output = $OMG->fetch(PDO::FETCH_ASSOC)) {
 <?php include 'parts/header.php'; ?>
 
 <body>
+<?php if (ua_smt() == true) {
+//background-color: #fafafa ?>
+<style>
+body {
+	background-color:#fff;
+	color: #333333;
+}
+</style>
+    <div class = "myprofile-row">
+    <div id="" class="myprofile-container">
+    <p class="myprofile-head">プロフィール</p> 
+                <div class="myprofile-left">
+                    
+                       <div class = "myprofile-image">
+                             <img src="img/<?php echo $imgurl; ?>" />
+                       </div>
+                       
+                </div>
+                
+                <div class = "myprofile-right">
+                    <div class = "myprofile-info">
+                        <a>ユーザネーム</a>
+                        <p>ダミー</p>
+                    </div>
+                    <div class = "p_update">
+                    <a href="home_change.php">
+                        <button type="button" class="btn btn-sm btn-info btn-round">変更</button>
+                    </a>
+                </div>
+                <div class="clear"></div>
+                    
+    
+                    <div class = "myprofile-info">
+                        <a>github URL</a>
+                        <p>ダミー</p>
+                    </div>
+    
+                    <div class = "myprofile-info">
+                        <a>紹介文</a>
+                        <p>ダミー</p>
+                    </div>
+                    <div class = "myprofile-info">
+                        <a>タグ</a>
+                    <p>
+                        <?php
+                            for ($i = 1; $i <= 5; ++$i):    //5個設定できるタグの数だけ繰り返し
+                                $Name = ${'tagN'.$i}['tag_name'];
+                                $TAG = ${'tagN'.$i}['id'];
+                                if ($Name != ''):      //タグが入っているかの判定
+                            ?>
+                            <a class="btn btn-warning btn-sm iphone5" style="border-radius: 60px; margin-bottom:5px;" href="user_search.php?kensaku=<?php echo $TAG; ?>" role="button">
+                                <?php echo $Name; ?>
+                            </a>
+                            <?php
+                                endif; //タグが入っているどうかの判定の閉じ
+                            endfor; //5回繰り返し処理終わり
+                            ?>
+                    </p>
+                    </div>
+                </div>
+                
+             
+             <div class="clear"></div>
+             
+             </div>
+      
+<?php }else{ ?>
     <div class="container">
         <div class="row">
-
             <!-- 残り8列はコンテンツ表示部分として使う -->
             <div class="">
                 <div class="panel panel-warning">
@@ -281,7 +347,7 @@ while ($output = $OMG->fetch(PDO::FETCH_ASSOC)) {
                         </div>
                         <!--プロフィール表示ここまで-->
                     </div>
-
+                    <?php } ?>
                     <!-- タブの切替部分 -->
                     <div id="bottom">
                         <ul class="nav nav-tabs panel" style="">
@@ -539,6 +605,7 @@ while ($output = $OMG->fetch(PDO::FETCH_ASSOC)) {
             </div><!-- col-xs-12の閉じ -->
         </div><!-- rowの閉じ -->
     </div><!-- containerの閉じ-->
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>

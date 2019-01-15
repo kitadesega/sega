@@ -70,7 +70,6 @@ if (isset($_POST['tag']) && is_array($_POST['tag'])) {
 
 ?>
 <!DOCTYPE HTML>
-<?php include 'parts/css.php'; ?>
 <style>
     .button_wrapper{
         text-align:center;
@@ -143,7 +142,48 @@ if (isset($_POST['tag']) && is_array($_POST['tag'])) {
                     <br/>
                 </div><!--panel-body-->
             </div><!--panel panel-info -->
+            <?php if (ua_smt() == true) { ?>
+                <style>
+                body {
+                    background-color:#fff;
+                    color: #333333;
+                }
+                </style>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            検索結果
+                        </div>
+                    </div>
+                <?php if (isset($userAry)) {
+                    foreach ($userAry as $value) {?>
+                <div class = "search-user-container">
+                    
+                        <div class = "search-user-img">
+                            <a>
+                             <img src="img/<?php echo $value['user_img']; ?>" />
+                            </a>
+                        </div>
 
+                        <div class = "search-user-contents">
+                            <strong><a href="afterU.php?Fuser=<?php echo $value['user_id']; ?>" class="widelink" ><?php echo $value['username']; ?></a></strong>
+
+                            <div class = "sh-text">
+                                <p>
+                                    <?php echo $value['hitokoto']; ?>
+                                </p>
+                            </div>
+
+                        </div>
+                </div>
+
+                <?php
+                    } 
+                 }
+                ?>
+                </div>
+
+            <?php }else{ ?>
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <div class="panel-title">
@@ -158,21 +198,21 @@ if (isset($_POST['tag']) && is_array($_POST['tag'])) {
                            ?>
 
                             <table class="table table-hover" >
-                                            <thead>
-                                                <tr>
-                                                    <th class="col-xs-2">なまえ</th>
-                                                    <th class="col-xs-4">あいこん</th>
-                                                    <th class="col-xs-6">ひとこと</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td><a href="afterU.php?Fuser=<?php echo $value['user_id']; ?>" class="widelink" ><?php echo $value['username']; ?></a></td>
-                                                    <td><img src="img/<?php echo $value['user_img']; ?>" width="100" /></td>
-                                                    <td><?php echo $value['hitokoto']; ?></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                <thead>
+                                    <tr>
+                                        <th class="col-xs-2">なまえ</th>
+                                        <th class="col-xs-4">あいこん</th>
+                                        <th class="col-xs-6">ひとこと</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><a href="afterU.php?Fuser=<?php echo $value['user_id']; ?>" class="widelink" ><?php echo $value['username']; ?></a></td>
+                                        <td><img src="img/<?php echo $value['user_img']; ?>" width="100" /></td>
+                                        <td><?php echo $value['hitokoto']; ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
                            <?php
                                  } ?>
@@ -181,7 +221,7 @@ if (isset($_POST['tag']) && is_array($_POST['tag'])) {
                     </div>
 
                 </div>
-
+                            <?php } ?>
         </div><!--col-xs-12 col-md-7 -->
 
     </div><!--row -->

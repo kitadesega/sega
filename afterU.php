@@ -255,19 +255,59 @@ while ($output = $OMG->fetch(PDO::FETCH_ASSOC)) {
 <?php include( "parts/header.php" ); ?>
 
 <body>
-    <div class="container">
+    
+<?php if (ua_smt() == true) { ?>
+    <style>
+body {
+	background-color:#fff;
+	color: #333333;
+}
+</style>
 
+<div class = "afterU-container">
 
-        <div class="row">
+    <div class = "afterU-image">
+            <img src="img/<?php echo $imgurl; ?>" />
+    </div>
+
+    <div class = "afterU-name">
+        <strong><?php echo $username ?></strong>
+    </div>
+
+    <div class = "follow-button">
+        <?php if($_SESSION['userN'] != $username){ ?>
+        <?php if($sonzai < 1 ){ ?>
+        <form method="post" action="afterU.php">
+            <input type="hidden" name="user" value="<?php echo $user_id; ?>">
+            <input type="submit" class="btn btn-success" value="フォロー">
+        </form>
+        <?php }else{ ?>
+        <form method="post" action="afterU.php">
+            <input type="hidden" name="anuser" value="<?php echo $user_id; ?>">
+            <input type="submit" class="btn btn-warning" value="フォロー解除">
+        </form>
+
+        <?php } 
+            }?>
+    </div><div class="clear"></div>
+
+    <div class = "afterU-text">
+        <p><?php echo nl2br($hitokoto); ?></p>
+        <div class = "afterU-url">
+            <a href="#">www.ダミー.url</a>
+        </div>
+    </div>
+    
+
+</div>
+
+<?php }else{ ?>
+
 
             <!-- 残り8列はコンテンツ表示部分として使う -->
             <div class="col-xs-12">
-                <div class="panel panel-warning">
-                    <div class="panel-heading">
-                        <div class="panel-title">名前：
-                            <?php echo $username; ?>
-                        </div>
-                    </div>
+                
+                    
                     <div class="panel-body">
                         <div id="dnweb-tabtest">
                             <!--プロフィール表示-->
@@ -310,7 +350,7 @@ while ($output = $OMG->fetch(PDO::FETCH_ASSOC)) {
                         <?php } }?>
                         <!--プロフィール表示ここまで-->
                     </div>
-
+                        <?php } ?>
                     <!-- タブの切替部分 -->
                     <div id="bottom">
                         <ul class="nav nav-tabs panel" style="">
@@ -323,25 +363,18 @@ while ($output = $OMG->fetch(PDO::FETCH_ASSOC)) {
                     <div class="tab-content">
                         <!-------------------------------------------------------------- タイムラインの表示------------------------------------------->
                         <div class="tab-pane active" id="tabtest1">
-                            <div class="panel panel-info">
+                            <div class="panel">
                                 <div class="panel-body">
 
-                                    <table align="center" cellpadding="3" cellspacing="0">
+                                    <table style= "width:100%;">
                                         <tbody>
                                             <tr>
                                                 <td>
                                                     <!-- ▼twitter風ここから -->
                                                     <div class="twitter__container">
 
-                                                        <!-- タイトル
-                                                        <div class="twitter__title">
-
-                                                        </div>-->
-
                                                         <!-- ▼タイムラインエリア scrollを外すと高さ固定解除 -->
                                                         <div class="twitter__contents scroll">
-
-
 
                                                             <?php
                                                             if (isset($tweetAry)) {
@@ -640,7 +673,6 @@ while ($output = $OMG->fetch(PDO::FETCH_ASSOC)) {
                     </div>
                 </div>
             </div><!-- dnweb-tabtestの閉じ -->
-        </div><!-- <div class="panel panel-warning"> -->
     </div><!-- col-xs-12の閉じ -->
     </div><!-- rowの閉じ -->
     </div><!-- containerの閉じ-->
