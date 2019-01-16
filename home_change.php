@@ -50,9 +50,69 @@ overflow-y : auto;
 body{
 overflow-x : hidden;
 overflow-y : auto;
+
 }
 </style>
 <body>
+<?php if (ua_smt() == true) { ?>
+    <style>
+body {
+	background-color:#fff;
+	color: #333333;
+}
+</style>
+
+<div class = "profile-edit">
+    <div class = "profile-edit-container">
+        <div class = "profile-edit-image">
+            <a>プロフィール画像</a>
+
+            <div class="imagePreview">
+                <span id = "parent">
+            <?PHP if (isset($imgurl)) {?>
+            <img src="img/<?php print $imgurl; ?>" />
+                  <?PHP } else { ?>
+                <input type="file" id="photo_1" name="photo_1" class="file" data-preview-file-type="image" data-language="ja" data-show-upload="false" data-show-caption="false" data-show-remove="false" data-default-preview-content='<img src="/images/noimage.png" alt="Photo1" style="width:160px">'>
+            <?PHP } ?></span>
+            </div>
+            <div class="input-group"style="margin-top:5px;">
+                <label class="input-group-btn">
+                    <span class="btn btn-primary">
+                        画像ファイルを選択<input type="file" style="display:none" class="uploadFile">
+                    </span>
+                </label>
+                <input type="text" class="form-control" readonly="">
+            </div>
+
+        </div>
+        <div class = "profile-edit-name">
+            <a>ユーザネーム</a><br/>
+            <input type="text" value="<?php echo $username; ?>" placeholder="" name="username" id="username" />
+        </div>
+        <div class = "profile-edit-name">
+            <a>性別</a><br/>
+            <input type="radio" id="bar_1" value="男性" name="sex" <?php if($sex == "男性"){ ?>checked<?php }?>/><label for="bar_1">男性</label>
+            <input type="radio" id="bar_2" value="女性" name="sex" <?php if($sex == "女性"){ ?>checked<?php }?>/><label for="bar_2">女性</label>
+        </div>
+       
+        <div class = "profile-edit-form">
+            <a>紹介文</a><br/>
+            <textarea id="Introduction" name = "description" cols="30" rows="7"><?php echo $hitokoto; ?></textarea>
+        </div>
+        <div class = "profile-edit-name">
+            <a><img src="svg/svg2/mark-github.svg" width="25" height="25" style="margin-top:-5px;">  Github URL</a><br/>
+            <input type="text" value="<?php echo $url ?>" placeholder="" name="url" id="username" />
+        </div>
+       
+        <div class = "update_button">
+            <button type="submit" style = "width:150px"class="btn btn-info btn-lg btn-round">変 更</button>
+        </div>
+
+    </div>
+</div>
+
+                <?php }else{ ?>
+
     <div class="container">  
         <div class="row">
             <!-- 残り8列はコンテンツ表示部分として使う -->
@@ -76,8 +136,6 @@ overflow-y : auto;
                              <input type="hidden" name="change" value="b" />
                              <br />
                             <input type="file" name="upfname" /><br />
-
-
 
                             <br/><a class="disabled">メールアドレス：
                                 <?php echo $email; ?></a><br /><a class="disabled">一言コメント：</a><br />
@@ -108,7 +166,29 @@ overflow-y : auto;
             </div>
         </div>
     </div>
+                    <?php } ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).on('change', ':file', function() {
+            var input = $(this),
+            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+            input.parent().parent().next(':text').val(label);
+            $("#parent").remove();
+            var files = !!this.files ? this.files : [];
+            if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
+            if (/^image/.test( files[0].type)){ // only image file
+                var reader = new FileReader(); // instance of the FileReader
+                reader.readAsDataURL(files[0]); // read the local file
+                reader.onloadend = function(){ // set image data as background of div
+                    input.parent().parent().parent().prev('.imagePreview').css("background-image", "url("+this.result+")");
+                }
+            }
+        });
+        </script>
+
+
 </body>
 </html>

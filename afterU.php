@@ -259,7 +259,7 @@ while ($output = $OMG->fetch(PDO::FETCH_ASSOC)) {
 <?php if (ua_smt() == true) { ?>
     <style>
 body {
-	background-color:#fff;
+	background-color:#f7fcfe;
 	color: #333333;
 }
 </style>

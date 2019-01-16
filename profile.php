@@ -253,7 +253,6 @@ body {
     <div id="" class="myprofile-container">
     <p class="myprofile-head">プロフィール</p> 
                 <div class="myprofile-left">
-                    
                        <div class = "myprofile-image">
                              <img src="img/<?php echo $imgurl; ?>" />
                        </div>

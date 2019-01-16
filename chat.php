@@ -69,13 +69,88 @@ if ($sIn == "logIn") {//入室画面から入室した時の処理
     }
 }
 ?>
-
+<?php include( "parts/header.php" ); ?>
 <body>
+<?php if (ua_smt() == true) { ?>
     <div class="container">
-        <?php include( "parts/header.php" ); ?>
         <div class="row">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                        <a style="font-size:16px;">ルーム名：</a>
+                        <span style="color:red;font-size:16px;">
+                                <?= $chatname ?>
+                                <div style="float:right";>
+                                    <form name="form1" method="post" action="chat_edit.php">
+                                    <input name="fHandle" type="hidden" value="<?= $sHandle ?>">
+                                    <input name="chatidD" type="hidden" value="<?= $chatid ?>">
+                                    <input name="chatname" type="hidden" value="<?= $chatname ?>">
+                                    <button type="submit" name="fSub2" class="btn btn-sm btn-warning">退出</button>
+                                    </form>
+                                </div>
+                        </span>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <!--
+                            <span class = "chat-my">
+                                <img src="img/<?php print $_SESSION['userNimg']; ?>"  />
+                            </span>
+                            <?= $sHandle ?>
+-->
+                        <?php
+                        include( "userlist.php" );
+                        ?>
+                        <br />
+                        <div style="display:inline-flex">
+                            <div id="">
+                                <form name="form1" method="post" action="chat.php">
+                                    <input name="fMsg" autofocus id="bms_send_message" type="textarea" size="100%"><!--　メッセージの入力　-->
+                                    <input name="fHandle" type="hidden" value="<?= $sHandle ?>">
+                                    <input name="chatid" type="hidden" value="<?= $chatid ?>">
+                                    <input name="chatname" type="hidden" value="<?= $chatname ?>">
+                                    <input type="submit" name="fSub1" id="bms_send_btn" value="発言">
+                                </form>
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+                            document.getElementById('fMsg').focus();
 
-            <div class="col-xs-12 col-md-7">
+                        </script>
+                        <?php
+                        if ($sMsg != "" && $sIn != "logIn") {//メッセージが入力されている場合。
+                            //$sMsg = real_escape_string( $sMsg );
+                            $sMsg = addslashes($sMsg);
+                            NGO("insert into chat_tbl values( null,'{$_SESSION['user']}','{$_SESSION['userN']}','{$_SESSION['userNimg']}','{$sMsg}',null,'{$chatid}' );");
+                        }
+                        //ここからチャットログ表示の処理
+                        ?>
+                        <div><span style="color:blue;"></span>
+
+                        </div>
+                        <hr>
+                        <table class="col-xs-12  col-md-12">
+                            <td style="background:#bcbcbc">
+                                <div class="line__container">
+                                    <div class="line__contents scroll">
+
+                                        <div id="ajaxreload">
+                                            <?php
+                                            include( "ajax.php" );
+                                            ?>
+                            </td>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<?php }else{?>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-10">
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <div class="panel-title">
@@ -140,6 +215,7 @@ if ($sIn == "logIn") {//入室画面から入室した時の処理
 
         </div>
     </div>
+                    <?php }?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>
