@@ -37,22 +37,20 @@
 <div id="tweet">
     <nav class="navbar navbar-default navbar-custom navbar-fixed-top" style="padding-bottom:0px;background-color:;">
         <div class="container" style="padding:transparent">
-
-     <ul class="nav navbar-nav nav-tabs panele paddin">
-        <li class="<?php if ($_SERVER['SCRIPT_NAME'] == '/sega/profile.php') {echo ' active';} ?>">
-            <a href="profile.php"><img src="svg/home.svg" width="24" height="24"><br />Home</a>
-        </li>
-        <li class="<?php if ($_SERVER['SCRIPT_NAME'] == '/sega/home.php') {echo ' active';} ?> ">
-            <a href="home.php" ><img src="svg/diary.svg" width="24" height="24"><br />diary</a>
-        </li>
-        <li class="<?php if ($_SERVER['SCRIPT_NAME'] == '/sega/chat_list.php') { echo ' active';} ?> ">
-            <a href="chat_list.php"><img src="svg/chat.svg" width="24" height="24"><br />チャット </a>
-        </li>
-        <li class="header-head <?php if ($_SERVER['SCRIPT_NAME'] == '/sega/user_search.php') {echo ' active';} ?>">
-            <a href="user_search.php"><img src="svg/search.svg"><br />検索</a>
-        </li>
-     </ul>
-
+            <ul class="nav navbar-nav nav-tabs panele paddin">
+                <li class="<?php if ($_SERVER['SCRIPT_NAME'] == '/sega/profile.php') {echo ' active';} ?>">
+                    <a href="profile.php"><img src="svg/home.svg" width="24" height="24"><br />Home</a>
+                </li>
+                <li class="<?php if ($_SERVER['SCRIPT_NAME'] == '/sega/home.php') {echo ' active';} ?> ">
+                    <a href="home.php" ><img src="svg/diary.svg" width="24" height="24"><br />diary</a>
+                </li>
+                <li class="<?php if ($_SERVER['SCRIPT_NAME'] == '/sega/chat_list.php') { echo ' active';} ?> ">
+                    <a href="chat_list.php"><img src="svg/chat.svg" width="24" height="24"><br />チャット </a>
+                </li>
+                <li class="header-head <?php if ($_SERVER['SCRIPT_NAME'] == '/sega/user_search.php') {echo ' active';} ?>">
+                    <a href="user_search.php"><img src="svg/search.svg"><br />検索</a>
+                </li>
+            </ul>
         </div><!-- /.container -->
     </nav>
 </div>

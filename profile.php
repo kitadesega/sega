@@ -25,6 +25,7 @@ while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
     $email = $row['email'];
     $imgurl = $row['user_img'];
     $hitokoto = $row['hitokoto'];
+    $githubURL = $row['URL'];
     $_SESSION['userN'] = $username;
     $_SESSION['userNimg'] = $imgurl;
     for ($i = 1; $i <= 5; ++$i) {
@@ -249,62 +250,69 @@ body {
 	color: #333333;
 }
 </style>
-    <div class = "myprofile-row">
+<div class = "myprofile-row">
     <div id="" class="myprofile-container">
-    <p class="myprofile-head">プロフィール</p> 
-                <div class="myprofile-left">
-                       <div class = "myprofile-image">
-                             <img src="img/<?php echo $imgurl; ?>" />
-                       </div>
-                       
+        <p class="myprofile-head">プロフィール</p> 
+        <div class="myprofile-left">
+                <div class = "myprofile-image">
+                        <img src="img/<?php echo $imgurl; ?>" />
                 </div>
-                
-                <div class = "myprofile-right">
-                    <div class = "myprofile-info">
-                        <a>ユーザネーム</a>
-                        <p>ダミー</p>
-                    </div>
-                    <div class = "p_update">
-                    <a href="home_change.php">
-                        <button type="button" class="btn btn-sm btn-info btn-round">変更</button>
+                <div class="follow-innfo-container">
+        <div class="follow-info">
+        <a>フォロー</a>
+        <p><?php echo $ECHOfollowCNT; ?></p>
+        </div>
+        <div class="follow-info">
+        <a>フォロワー</a>
+        <p><?php echo $followerCNT; ?></p>
+        </div>
+        </div>
+
+        </div>
+       
+        
+        <div class = "myprofile-right">
+            <div class = "myprofile-info">
+                <a>ユーザネーム</a>
+                <p><?php echo $username; ?></p>
+            </div>
+            <div class = "p_update">
+            <a href="home_change.php">
+                <button type="button" class="btn btn-sm btn-info btn-round">変更</button>
+            </a>
+        </div>
+        <div class="clear"></div>
+
+            <div class = "myprofile-info" style="word-wrap: break-word;">
+                <a>github URL</a>
+                <p><a href="<?php echo $githubURL; ?>"><?php echo $githubURL; ?></a></p>
+            </div>
+
+            <div class = "myprofile-info">
+                <a>紹介文</a>
+                <p><?php echo nl2br($hitokoto); ?></p>
+            </div>
+            <div class = "myprofile-info">
+                <a>タグ</a>
+            <p>
+                <?php
+                    for ($i = 1; $i <= 5; ++$i):    //5個設定できるタグの数だけ繰り返し
+                        $Name = ${'tagN'.$i}['tag_name'];
+                        $TAG = ${'tagN'.$i}['id'];
+                        if ($Name != ''):      //タグが入っているかの判定
+                    ?>
+                    <a class="btn btn-warning btn-sm iphone5" style="border-radius: 60px; margin-bottom:5px;" href="user_search.php?kensaku=<?php echo $TAG; ?>" role="button">
+                        <?php echo $Name; ?>
                     </a>
-                </div>
-                <div class="clear"></div>
-                    
-    
-                    <div class = "myprofile-info">
-                        <a>github URL</a>
-                        <p>ダミー</p>
-                    </div>
-    
-                    <div class = "myprofile-info">
-                        <a>紹介文</a>
-                        <p>ダミー</p>
-                    </div>
-                    <div class = "myprofile-info">
-                        <a>タグ</a>
-                    <p>
-                        <?php
-                            for ($i = 1; $i <= 5; ++$i):    //5個設定できるタグの数だけ繰り返し
-                                $Name = ${'tagN'.$i}['tag_name'];
-                                $TAG = ${'tagN'.$i}['id'];
-                                if ($Name != ''):      //タグが入っているかの判定
-                            ?>
-                            <a class="btn btn-warning btn-sm iphone5" style="border-radius: 60px; margin-bottom:5px;" href="user_search.php?kensaku=<?php echo $TAG; ?>" role="button">
-                                <?php echo $Name; ?>
-                            </a>
-                            <?php
-                                endif; //タグが入っているどうかの判定の閉じ
-                            endfor; //5回繰り返し処理終わり
-                            ?>
-                    </p>
-                    </div>
-                </div>
-                
-             
-             <div class="clear"></div>
-             
-             </div>
+                    <?php
+                        endif; //タグが入っているどうかの判定の閉じ
+                    endfor; //5回繰り返し処理終わり
+                    ?>
+            </p>
+        </div>
+    </div>      
+    <div class="clear"></div>
+</div>
       
 <?php }else{ ?>
     <div class="container">

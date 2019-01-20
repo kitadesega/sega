@@ -19,6 +19,7 @@ include 'parts/function.php';
     <link href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css" rel="stylesheet">
     <script src="js/jquery-3.3.1.min.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/head.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <meta http-equiv="content-style-type" content="text/css">
     <meta http-equiv="content-script-type" content="text/javascript">
@@ -56,22 +57,38 @@ if (isset($_POST['login'])) {
 <!DOCTYPE HTML>
 
 <body>
-<div class="col-xs-6 col-xs-offset-3">
-
+<?php if (ua_smt() == true) { ?>
+<div class="col-xs-8 col-xs-offset-2">
 <form method="post">
-	<h1>ろぐいんふぉーむ</h1>
-
+	<h1 style="text-align:center">ログイン</h1>
 	
 	<div class="form-group">
-		<input type="email"  class="form-control" name="email" placeholder="メールアドレス" required />
+		<input type="email"  class="form-control" name="email" placeholder="メールアドレス" id="reg-username"required />
 	</div>
 	<div class="form-group">
-		<input type="password" class="form-control" name="password" placeholder="パスワード" required />
+		<input type="password" class="form-control" name="password" placeholder="パスワード" id="reg-username" required />
 	</div>
-	<button type="submit" class="btn btn-default" name="login">ログインする</button>
-	<a href="register.php">会員登録はこちら</a>
+	<button type="submit" class="btn btn-success" name="login">ログイン</button>
+	<br/><a href="register.php">会員登録はこちら</a>
 </form>
-
 </div>
+<?php }else{ ?>
+    <div class="col-xs-3 col-xs-offset-4"style="margin-top:100px;">
+<form method="post">
+	<h1 style="text-align:center">ログイン</h1>
+	
+	<div class="form-group">
+		<input type="email"  class="form-control" name="email" placeholder="メールアドレス" id="reg-username"required />
+	</div>
+	<div class="form-group">
+		<input type="password" class="form-control" name="password" placeholder="パスワード" id="reg-username" required />
+    </div>
+    <div style="float:right;padding-right:30%;">
+	<button type="submit" class="btn btn-success" name="login">ログイン</button>
+	<a href="register.php"><button type="submit" class="btn btn-info" name="login">会員登録はこちら</button></a></div>
+</form>
+</div>
+
+<?php } ?>
 </body>
 </html>

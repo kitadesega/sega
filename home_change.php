@@ -7,12 +7,13 @@ if ( !isset( $_SESSION['user'] ) ) {
 }
 //変更ボタンを押した時のプロフィール変更処理
 if( isset( $_POST['change'] ) ) {
-$savedir = "./img/";    //  master 
-$upfname = $_FILES["upfname"]["name"];
+$savedir        = "./img/";    //  master 
+$upfname        = $_FILES["upfname"]["name"];
 //テキストボックス入力値 
-$newfilename = $_POST["filename"];
-$hitokoto = $_POST["hitokoto"];
-$privacy = $_POST["privacy"];
+$newfilename    = $_POST["filename"];
+$name           = $_POST["username"];
+$hitokoto       = $_POST["description"];
+$URL            = $_POST["URL"];
 //元のファイルの拡張子を抜き出す 
 $fileext = substr( $upfname, strrpos( $upfname, "." ) );
 if ( $fileext != "" ) {
@@ -22,7 +23,7 @@ if ( $fileext != "" ) {
     user_img = '" . $savefilename . "' where user_id = '" . $_SESSION['user'] . "'" );
 }
 NGO( "update users set
-hitokoto= '" . $hitokoto . "' , privacy = '$privacy' where user_id = '" . $_SESSION['user'] . "'" );
+username= '" . $name . "' , hitokoto= '" . $hitokoto . "' , URL = '$URL' where user_id = '" . $_SESSION['user'] . "'" );
 header( 'location:home.php' );
     
 }
@@ -30,12 +31,13 @@ header( 'location:home.php' );
 $SqlRes = NGO( "SELECT * FROM users WHERE user_id=" . $_SESSION['user'] . "" );
 // ユーザー情報の取り出し
 while ( $row = $SqlRes->fetch( PDO::FETCH_ASSOC ) ) {
-    $username = $row['username'];
-    $email = $row['email'];
-    $imgurl = $row['user_img'];
-    $hitokoto = $row['hitokoto'];
-    $_SESSION['userN'] = $username;
-    $_SESSION['userNimg'] = $imgurl;
+    $username   = $row['username'];
+    $email      = $row['email'];
+    $url        = $row['URL'];
+    $imgurl     = $row['user_img'];
+    $hitokoto   = $row['hitokoto'];
+    $_SESSION['userN']      = $username;
+    $_SESSION['userNimg']   = $imgurl;
 }
 ?>
 <link rel='stylesheet' href='css/style.css' type='text/css' media='all' />
@@ -55,7 +57,7 @@ overflow-y : auto;
 </style>
 <body>
 <?php if (ua_smt() == true) { ?>
-    <style>
+<style>
 body {
 	background-color:#fff;
 	color: #333333;
@@ -64,51 +66,45 @@ body {
 
 <div class = "profile-edit">
     <div class = "profile-edit-container">
-        <div class = "profile-edit-image">
-            <a>プロフィール画像</a>
-
-            <div class="imagePreview">
+        <form action="home_change.php" method="post" enctype="multipart/form-data">
+            <div class = "profile-edit-image">
+                <a>プロフィール画像</a>
+                <div class="imagePreview">
                 <span id = "parent">
-            <?PHP if (isset($imgurl)) {?>
-            <img src="img/<?php print $imgurl; ?>" />
-                  <?PHP } else { ?>
-                <input type="file" id="photo_1" name="photo_1" class="file" data-preview-file-type="image" data-language="ja" data-show-upload="false" data-show-caption="false" data-show-remove="false" data-default-preview-content='<img src="/images/noimage.png" alt="Photo1" style="width:160px">'>
-            <?PHP } ?></span>
+                    <?PHP if (isset($imgurl)) {?>
+                    <img src="img/<?php print $imgurl; ?>" />
+                        <?PHP } else { ?>
+                        <input type="file" id="photo_1" name="photo_1" class="file" data-preview-file-type="image" data-language="ja" data-show-upload="false" data-show-caption="false" data-show-remove="false" data-default-preview-content='<img src="/images/noimage.png" alt="Photo1" style="width:160px">'>
+                    <?PHP } ?>
+                </span>
+                </div>
+                <div class="input-group"style="margin-top:5px;">
+                    <label class="input-group-btn">
+                        <span class="btn btn-primary">
+                            画像ファイルを選択<input type="file" style="display:none" class="uploadFile">
+                        </span>
+                    </label>
+                    <input type="text" class="form-control" readonly="">
+                </div>
             </div>
-            <div class="input-group"style="margin-top:5px;">
-                <label class="input-group-btn">
-                    <span class="btn btn-primary">
-                        画像ファイルを選択<input type="file" style="display:none" class="uploadFile">
-                    </span>
-                </label>
-                <input type="text" class="form-control" readonly="">
+            <div class = "profile-edit-name">
+                <a>ユーザネーム</a><br/>
+                <input type="text" value="<?php echo $username; ?>" placeholder="" name="username" id="username" />
             </div>
-
-        </div>
-        <div class = "profile-edit-name">
-            <a>ユーザネーム</a><br/>
-            <input type="text" value="<?php echo $username; ?>" placeholder="" name="username" id="username" />
-        </div>
-        <div class = "profile-edit-name">
-            <a>性別</a><br/>
-            <input type="radio" id="bar_1" value="男性" name="sex" <?php if($sex == "男性"){ ?>checked<?php }?>/><label for="bar_1">男性</label>
-            <input type="radio" id="bar_2" value="女性" name="sex" <?php if($sex == "女性"){ ?>checked<?php }?>/><label for="bar_2">女性</label>
-        </div>
-       
-        <div class = "profile-edit-form">
-            <a>紹介文</a><br/>
-            <textarea id="Introduction" name = "description" cols="30" rows="7"><?php echo $hitokoto; ?></textarea>
-        </div>
-        <div class = "profile-edit-name">
-            <a><img src="svg/svg2/mark-github.svg" width="25" height="25" style="margin-top:-5px;">  Github URL</a><br/>
-            <input type="text" value="<?php echo $url ?>" placeholder="" name="url" id="username" />
-        </div>
-       
-        <div class = "update_button">
-            <button type="submit" style = "width:150px"class="btn btn-info btn-lg btn-round">変 更</button>
-        </div>
-
-    </div>
+            <div class = "profile-edit-form">
+                <a>紹介文</a><br/>
+                <textarea id="Introduction" name = "description" cols="30" rows="7"><?php echo $hitokoto; ?></textarea>
+            </div>
+            <div class = "profile-edit-name">
+                <a><img src="svg/svg2/mark-github.svg" width="25" height="25" style="margin-top:-5px;">  Github URL</a><br/>
+                <input type="text" value="<?php echo $url ?>" placeholder="" name="URL" id="username" />
+            </div>
+            <div class = "update_button">
+                <input type="hidden"  name="change"  />
+                <button type="submit" style = "width:150px" class="btn btn-info btn-lg btn-round">変 更</button>
+            </div>
+        </form>
+    </div> 
 </div>
 
                 <?php }else{ ?>

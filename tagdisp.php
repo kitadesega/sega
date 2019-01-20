@@ -13,12 +13,15 @@ while ($Row = $SqlRes->fetch(PDO::FETCH_ASSOC)) {
 if (isset($TagAry)) {
     $TagCNT = count($TagAry);
 }
-
+$five_flag = true;
 // 自分の使用しているタグを抜き出す
 $result = NGO('SELECT * FROM users WHERE user_id='.$user.'');
 while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
     for ($i = 1; $i <= 5; ++$i) {
         ${'tag'.$i} = $row['tag'.$i];
+        if(${'tag'.$i} == 0){
+            $five_flag = false;
+        }
     }
 }
 
@@ -45,8 +48,8 @@ if (isset($_POST['tagedit'])) {
     $X = false;
 
     //全て小文字にして重複を逃れるために頑張る所
-    $editchec = mb_convert_kana($tagedit, 'KVRNC');
-    $editcheck = mb_strtolower($editchec);
+    $editcheck  = mb_convert_kana($tagedit, 'KVRNC');
+    $editcheck  = mb_strtolower($editchec);
     for ($j = 0; $j < $TagCNT; ++$j) {
         $tagcheck = mb_convert_kana($TagAry[$j]['tag_name'], 'KVRNC');
         $tagcheck = mb_strtolower($tagcheck);
@@ -71,20 +74,6 @@ if (isset($_POST['tagedit'])) {
         text-align:center;
     }
 </style>
-<script type="text/javascript">
-    $( function (  ) {
-        $( 'input' ).click( function (  ) {
-            var checked_length = $( 'input:checked' ).length;
-
-            // 選択上限は5つまで
-            if ( checked_length >= 5 ) {
-                $( 'input:not( :checked )' ).attr( 'disabled', 'disabled' );
-            } else {
-                $( 'input:not( :checked )' ).removeAttr( 'disabled' );
-            }
-        } );
-    } );
-</script>
 <body>
 <?php include 'parts/header.php'; ?>
     <div class="container">
@@ -152,4 +141,29 @@ if (isset($_POST['tagedit'])) {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>
+
+<script type="text/javascript">
+window.onload = function() {
+    var checked_length = $( 'input:checked' ).length;
+
+// 選択上限は5つまで
+if ( checked_length >= 5 ) {
+    $( 'input:not( :checked )' ).attr( 'disabled', 'disabled' );
+} else {
+    $( 'input:not( :checked )' ).removeAttr( 'disabled' );
+}
+}
+    $( function () {
+        $( 'input' ).click( function firstscript() {
+            var checked_length = $( 'input:checked' ).length;
+
+            // 選択上限は5つまで
+            if ( checked_length >= 5 ) {
+                $( 'input:not( :checked )' ).attr( 'disabled', 'disabled' );
+            } else {
+                $( 'input:not( :checked )' ).removeAttr( 'disabled' );
+            }
+        } );
+    } );
+</script>
 </html>

@@ -90,7 +90,7 @@ a:hover {
         -webkit-transform: scale(1.4);
         transform: scale(1.4);
     }
-
+    
     /*歯車の位置*/
     .btn-default {
         margin-top: 10px;
@@ -444,8 +444,8 @@ border-radius: 4px;
 }
 
 .myprofile-right{
-    width:45%;
-    margin-left:15%;
+    width:50%;
+    margin-left:7%;
     height:auto;
     float:left;
 }
@@ -469,12 +469,42 @@ border-radius: 4px;
         width:50px;
         text-align:center;
         position:relative;
-        
     }
     .p_update p{
         text-align:center;
         font-size:10px;
         color:#c8c8c8;
+    }
+
+    .follow_update{
+        margin-top:-40px;
+        margin-left:80%;
+        width:auto;
+        text-align:center;
+        position:relative;
+    }
+
+    .follow_update a{
+        font-size:10px;
+    }
+
+    .follow-innfo-container{
+        margin-top:10px;
+        width:120%;
+        float:left;
+    }
+
+    .follow-info{
+        float:left;
+        margin-left:5%;
+    }
+
+    .follow-info a{
+        font-size:12px;
+    }
+    .follow-info p{
+        padding-left:5px;
+        text-align:center;
     }
 .myprofile-image img{
 
@@ -511,7 +541,7 @@ border-radius: 4px;
 .afterU-text{
     width:70%;
     margin:0 auto;
-    margin-top:10px;
+    margin-top:15px;
     margin-bottom:10px;
 }
 
@@ -520,13 +550,13 @@ border-radius: 4px;
 }
 
 .afterU-url{
-    margin-top:10px;
+    margin-top:-10px;
 }
 .follow-button{
     float:left;
     position: relative;
     margin-top:-20%;
-    margin-left:60%;
+    margin-left:70%;
 }
 .afterU-image img{
 
@@ -586,6 +616,11 @@ border-radius: 4px;
 margin-top:10px;
 margin-right:5px;
 float:right;
+}
+
+.info-active{
+    color: #FFF !important;
+    background: #5bc0de !important;
 }
 
 .profile-edit{
@@ -703,5 +738,32 @@ float:right;
         object-fit: cover; /* ADD */
         border: 1.5px solid #c8c8c8; 
         }
+/*登録画面*/
+    input#reg-username {
+		border: 1px solid #c8c8c8; 
+		border-radius:20px;
+		box-shadow: none;
+		padding: 8px 10px;
+		width:100%;
+    }
     
+    input#reg-username:focus {
+		outline: none;
+    }
+
+    #reg-Introduction{
+        border: 1px solid #c8c8c8; 
+        border-radius:10px;
+        width:100%;
+        height:150px;
+    }
+    
+    .reg_button{
+	
+        width:120px;
+        margin:0 auto;
+        margin-top:30px;
+        margin-bottom:30px;
+        
+    }
     

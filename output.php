@@ -72,21 +72,19 @@ for ($i = 1; $i <= 5; $i++) {
                                     <textarea class="form-control  input-sm" rows="3" name="text" placeholder="テキスト" required></textarea>
                                 </div>
                             </div>
+                            
                             <div class="row">
                                 <div class="col-sm-2">ファイル</div>
                                 <div class="col-sm-4" style="padding: 10px;">
                                     <input type="file" class="form-control input-sm" name="fname">
                                 </div>
                             </div>
-                            <div class="text-center" style="padding: 30px;">
 
+                            <div class="text-center" style="padding: 30px;">
                                 <button type="submit" class="btn btn-success" name = "output">送信</button>
                             </div>
-
-
-                      
+                            
                         <!--メディアうｐ-->
-
                 </form>
             </div>
         </div>

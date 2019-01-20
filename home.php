@@ -21,12 +21,12 @@ $result = NGO('SELECT * FROM users WHERE user_id='.$user.'');
 
 // ユーザー情報の取り出し
 while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-    $username = $row['username'];
-    $email = $row['email'];
-    $imgurl = $row['user_img'];
-    $hitokoto = $row['hitokoto'];
-    $_SESSION['userN'] = $username;
-    $_SESSION['userNimg'] = $imgurl;
+    $username   = $row['username'];
+    $email      = $row['email'];
+    $imgurl     = $row['user_img'];
+    $hitokoto   = $row['hitokoto'];
+    $_SESSION['userN']      = $username;
+    $_SESSION['userNimg']   = $imgurl;
     for ($i = 1; $i <= 5; ++$i) {
         ${'tag'.$i} = $row['tag'.$i];
     }
@@ -39,10 +39,10 @@ for ($i = 1; $i <= 5; ++$i) {
 
 //投稿の処理
 if (isset($_POST['contents'])) {
-    $handle = $_SESSION['userN'];
-    $img = $_SESSION['userNimg'];
-    $contents = $_POST['contents'];
-    $contents = addslashes($contents);
+    $handle     = $_SESSION['userN'];
+    $img        = $_SESSION['userNimg'];
+    $contents   = $_POST['contents'];
+    $contents   = addslashes($contents);
     NGO("insert into tweet_tbl values
 ( null,'$user',null,'$handle','$img','$contents',null )");
     header('Location: home.php');
@@ -50,11 +50,11 @@ if (isset($_POST['contents'])) {
 
 //返信の処理
 if (isset($_POST['contents2'])) {
-    $handle = $_SESSION['userN'];
-    $img = $_SESSION['userNimg'];
-    $contents2 = $_POST['contents2'];
-    $content2 = addslashes($contents2);
-    $Replyid = $_POST['Replyid'];
+    $handle     = $_SESSION['userN'];
+    $img        = $_SESSION['userNimg'];
+    $contents2  = $_POST['contents2'];
+    $content2   = addslashes($contents2);
+    $Replyid    = $_POST['Replyid'];
     NGO("insert into tweet_tbl values
 ( null,'$user','$Replyid','$handle','$img','$contents2',null )");
     header('Location: home.php');
@@ -95,14 +95,13 @@ if (isset($followAry)) {
     //フォローしている人数の表示用
     $ECHOfollowCNT = count($followAry);
 } else {
-    $ECHOfollowCNT = 0;
-    $followCNT = 1;
+    $ECHOfollowCNT  = 0;
+    $followCNT      = 1;
 }
 
 //投稿のIDとフォローしている人、又は自分とIDが一致していれば$tweetAry配列に加える
 for ($i = 0; $i < $ALLtweetCNT; ++$i) {
     for ($j = 0; $j < $followCNT; ++$j):
-
         if (isset($followAry)) {
             if ($ALLtweet[$i]['user_id'] == $followAry[$j]['user_id'] || $ALLtweet[$i]['user_id'] == $user) {
                 $tweetAry[] = $ALLtweet[$i];
@@ -149,11 +148,11 @@ if (isset($_POST['deleteimg'])) {
 //自分のライブラリ画像を取り出す
 $OMG = NGO("select * from output where user_id = '$user'");
 while ($myimage = $OMG->fetch(PDO::FETCH_ASSOC)) {
-    $imgAry[] = $myimage;
-    $tagid = $myimage['tag_id'];
-    $sqls = NGO("select * from tag where id = '$tagid'");
-    $sqR = $sqls->fetch(PDO::FETCH_ASSOC);
-    $tags[] = $sqR;
+    $imgAry[]   = $myimage;
+    $tagid      = $myimage['tag_id'];
+    $sqls       = NGO("select * from tag where id = '$tagid'");
+    $sqR        = $sqls->fetch(PDO::FETCH_ASSOC);
+    $tags[]     = $sqR;
 }
 if (isset($imgAry)) {
     $imgCNT = count($imgAry);
@@ -250,8 +249,6 @@ box-shadow: 0 1px 1px rgba(0,0,0,.05);
                     <!---------- タイムラインの表示-------->
                     <div class="tab-pane active" id="tabtest1">
                         <!-- <table align="center" cellpadding="3" cellspacing="0">
-<tbody>
-<tr>
 <td> 横幅めいっぱい使いたいのでコメント化一応消さずに残しておく。-->
                         <!-- ▼twitter風ここから -->
                         <div class="twitter__container">
@@ -364,8 +361,6 @@ box-shadow: 0 1px 1px rgba(0,0,0,.05);
 
                                 <?php if ($row['num'] != 0): ?>
 
-
-
                                 <!-- <hr> 返信があれば表示する -->
                                 <?php //返信が存在しているか
                                           if (isset($ReplyCNT)){
@@ -375,9 +370,7 @@ box-shadow: 0 1px 1px rgba(0,0,0,.05);
                                 <div id="<?php echo $tweet['id']; ?>" style="display:none;clear:both;">
 
                                     <!--この部分が折りたたまれ、展開ボタンをクリックすることで展開します。-->
-                                    <?php
-                                          } ?>
-
+                                                               <?php } ?>
                                     <?php foreach ($ReplyAry as $Reply){
                                               if ($tweet['id'] == $Reply['target_id']){ //返信先のIDと、送り先の無い投稿のIDが一致した場合
                                     ?>

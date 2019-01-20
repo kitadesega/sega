@@ -61,13 +61,23 @@ if (isset($_POST['tag']) && is_array($_POST['tag'])) {
         for ($j = 0; $j < 5; ++$j) {
             if ($users[$i]['tag1'] == $sqltag[$j] || $users[$i]['tag2'] == $sqltag[$j] || $users[$i]['tag3'] == $sqltag[$j] ||
                 $users[$i]['tag4'] == $sqltag[$j] || $users[$i]['tag5'] == $sqltag[$j]) {
+            $user_id = $users[$i]['user_id'];
+                    $SqlRes = NGO("select * from follows where user_id = $id AND follow_id = $user_id ");
+                    $usera = $SqlRes->fetch(PDO::FETCH_ASSOC);
+                
+                if($usera){
+                    $users[$i]["follow_flg"] = true;
+                }else{
+                    $users[$i]["follow_flg"] = false;
+                }
                 $userAry[] = $users[$i];
+                
+                
                 break;
             }
         }
     }
 }
-
 ?>
 <!DOCTYPE HTML>
 <style>
@@ -76,20 +86,7 @@ if (isset($_POST['tag']) && is_array($_POST['tag'])) {
     }
     
 </style>
-<script type="text/javascript">
-    $( function (  ) {
-        $( 'input' ).click( function (  ) {
-            var checked_length = $( 'input:checked' ).length;
 
-            // 選択上限は5つまで
-            if ( checked_length >= 5 ) {
-                $( 'input:not( :checked )' ).attr( 'disabled', 'disabled' );
-            } else {
-                $( 'input:not( :checked )' ).removeAttr( 'disabled' );
-            }
-        } );
-    } );
-</script>
 <body>
     <?php include 'parts/header.php'; ?>
             <?php if (ua_smt() == true) { ?>
@@ -160,10 +157,7 @@ if (isset($_POST['tag']) && is_array($_POST['tag'])) {
                     foreach ($userAry as $value) {?>
             <div class="search-user-container">
 
-                
-
                 <div class="search-user-contents">
-
                 <div class="search-user-img">
                     <a>
                         <img src="img/<?php echo $value['user_img']; ?>" />
@@ -171,17 +165,20 @@ if (isset($_POST['tag']) && is_array($_POST['tag'])) {
                 </div>
 
                     <strong><a style = "display:block;margin-top:-50px;margin-left:4.5em;"href="afterU.php?Fuser=<?php echo $value['user_id']; ?>" class="widelink" ><?php echo $value['username']; ?></a></strong>
-                  
                     <div class="sh-text">
                         <p>
                             <?php echo $value['hitokoto']; ?>
                         </p>
                     </div>
-                    
                 </div>
-                <div class="search-follow">
-                        <button type="submit" style = "width:80px"class="btn btn-info btn-sm btn-round">フォロー</button>
-                    </div>
+                <div class="search-follow artist<?PHP echo $value['user_id']; ?> <?PHP echo $value['follow_flg'] ? "on" : "off"; ?>"onclick="toggleFollow(<?PHP echo $value['user_id']; ?>); return false;">
+                    <?PHP if($value['follow_flg'] == false){ ?>
+                        <button type="submit" style = "width:80px"class="btn btn-info btn-sm btn-round btn-outline">フォロー</button>
+
+                    <?php }else{ ?>
+                        <button type="submit" style = "width:80px"class="btn btn-info btn-sm btn-round btn-outline info-active">フォロー中</button>
+                    <?php } ?>
+                </div>
                 
             </div>
 
@@ -297,3 +294,28 @@ if (isset($_POST['tag']) && is_array($_POST['tag'])) {
 </body>
 
 </html>
+<script>
+    function toggleFollow(artistId){
+        var btn = $('.artist'+artistId);
+        var evt = $('.'+artistId);
+        var followed = btn.hasClass('on');
+        $.post(
+            'follow_ajax.php',
+            {'userID':artistId, 'follow':followed?1:0, 'ajax':1},
+            function(response,status){
+                    if(followed){
+                        console.log(btn);
+                        btn.removeClass('on');
+                        btn.addClass('off');
+                        btn.html('<button type="submit" style = "width:80px"class="btn btn-info btn-sm btn-round btn-outline">フォロー</button>');
+                    }else{
+                        btn.removeClass('off');
+                        btn.addClass('on');
+                        btn.html('<button type="submit" style = "width:80px"class="btn btn-info btn-sm btn-round btn-outline info-active">フォロー中</button>');
+                    }
+               
+                
+            }
+        );
+    }
+</script>

@@ -9,11 +9,10 @@ if (isset($_POST["output"])) {
     $tag = $_POST["tag"];
     $text = $_POST["text"];
     $media = $_POST["title"];
-
-$tempfile = $_FILES['fname']['tmp_name'];
-$filename = './img/' . $_FILES['fname']['name'];
-$name = $_FILES['fname']['name'];
-$fileext = substr($name, strrpos($name, "."));
+    $tempfile = $_FILES['fname']['tmp_name'];
+    $filename = './img/' . $_FILES['fname']['name'];
+    $name = $_FILES['fname']['name'];
+    $fileext = substr($name, strrpos($name, "."));
 
 //正規表現で画像以外を弾く。
 if (!preg_match('/\.gif$|\.png$|\.jpg$|\.jpeg$|\.bmp$/i', $filename)) {
