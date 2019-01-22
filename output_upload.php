@@ -43,7 +43,7 @@ if (is_uploaded_file($tempfile)) {
     $elmsg = "ファイルが選択されていません。";
 }
 
-header("Location: home.php");
+header("Location:profile.php");
    
 }
 

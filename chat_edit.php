@@ -82,7 +82,6 @@ if (isset($_POST["chatid"])) {
 }
 //ここからチャットを作る画面
 ?>
-<?php include( "parts/css.php" ); ?>
 <script src="js/ajax.js"></script>
 <title>ページタイトル</title>
 <?php include( "parts/header.php" ); ?>

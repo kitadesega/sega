@@ -91,7 +91,6 @@ if (isset($_POST['delete']) && $_POST['delete'] == "削除") {
 <html lang="ja">
 
     <?php include("parts/head.php"); ?>
-    <?php include("../parts/css.php"); ?>
     <body>
 
         <!-- Navigation -->

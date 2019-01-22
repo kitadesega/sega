@@ -4,7 +4,7 @@ header('Content-Type:text/html; charset=UTF-8');
 // ここから、register.phpと同様
 session_start();
 if (isset($_SESSION['user']) != '') {
-    header('Location: home.php');
+    header('Location:profile.php');
 }
 include 'parts/function.php';
 

@@ -25,7 +25,6 @@ for ($i = 1; $i <= 5; $i++) {
     ${"tagN" . $i} = NGOpro(${"tag" . $i});
 }
 ?>
-<?php include( "parts/css.php" ); ?>
 <script src="js/ajax.js"></script>
 <title>ページタイトル</title>
 <?php include( "parts/header.php" ); ?>

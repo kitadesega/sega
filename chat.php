@@ -11,7 +11,6 @@ if (!isset($_SESSION['user'])) {
     header("Location: index.php");
 }
 ?>
-<?php include( "parts/css.php" ); ?>
 <link href="css/top.css" rel="stylesheet">
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
 <script src="js/ajax.js"></script>

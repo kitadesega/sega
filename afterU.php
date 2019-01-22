@@ -234,7 +234,6 @@ while ($output = $OMG->fetch(PDO::FETCH_ASSOC)) {
 
 ?>
 	<link rel='stylesheet' href='css/style.css' type='text/css' media='all' />
-	<?php include( "parts/css.php"); ?>
 	<script type="text/javascript">
 		$(document).ready(function() {
 		        var url = document.location.toString();

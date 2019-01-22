@@ -88,7 +88,7 @@ if (isset($_POST['TAGsearch'])) {
         }
     }
 }
-?><?php include 'parts/css.php'; ?>
+?>
 <?php include 'parts/header.php'; ?>
 <body>
     <div class="container">

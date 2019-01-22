@@ -47,7 +47,7 @@ if (isset($RowAry)) {
     }
 }
 
-?><?php include 'parts/css.php'; ?>
+?>
 <?php include 'parts/header.php'; ?>
 <style>
     .kadomaru{

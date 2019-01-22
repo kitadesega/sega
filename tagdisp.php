@@ -68,7 +68,6 @@ if (isset($_POST['tagedit'])) {
 }
 ?>
 <!doctype html>
-<?php include 'parts/css.php'; ?>
 <style>
     .button_wrapper{
         text-align:center;

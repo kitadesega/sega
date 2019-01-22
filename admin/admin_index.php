@@ -36,7 +36,6 @@ if(isset($_POST['login'])) {
 } ?>
 
 <!DOCTYPE HTML>
-<?php include("css/css.php"); ?>
 <body>
 <div class="col-xs-6 col-xs-offset-3">
 

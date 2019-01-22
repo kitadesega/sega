@@ -2,7 +2,7 @@
 session_start( );
 if(  isset( $_SESSION['user']) != "") {
 	// ログイン済みの場合はリダイレクト
-	header( "Location: home.php");
+	header( "Location: profile.php");
 }
 
 // DBとの接続

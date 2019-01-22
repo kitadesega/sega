@@ -7,7 +7,6 @@ include("../parts/function.php");
 ?>
 <!DOCTYPE HTML>
 
-<?php include("css/css.php"); ?>
 </head>
 <body>
 <div class="col-xs-6 col-xs-offset-3">

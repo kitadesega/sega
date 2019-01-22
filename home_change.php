@@ -8,7 +8,7 @@ if ( !isset( $_SESSION['user'] ) ) {
 //変更ボタンを押した時のプロフィール変更処理
 if( isset( $_POST['change'] ) ) {
 $savedir        = "./img/";    //  master 
-$upfname        = $_FILES["upfname"]["name"];
+$upfname        = $_FILES["file"]["name"];
 //テキストボックス入力値 
 $newfilename    = $_POST["filename"];
 $name           = $_POST["username"];
@@ -18,13 +18,13 @@ $URL            = $_POST["URL"];
 $fileext = substr( $upfname, strrpos( $upfname, "." ) );
 if ( $fileext != "" ) {
     $savefilename = $newfilename . $fileext;
-    move_uploaded_file( $_FILES["upfname"]["tmp_name"], $savedir . $savefilename );
+    move_uploaded_file( $_FILES["file"]["tmp_name"], $savedir . $savefilename );
     NGO( "update users set
     user_img = '" . $savefilename . "' where user_id = '" . $_SESSION['user'] . "'" );
 }
 NGO( "update users set
 username= '" . $name . "' , hitokoto= '" . $hitokoto . "' , URL = '$URL' where user_id = '" . $_SESSION['user'] . "'" );
-header( 'location:home.php' );
+header( 'location:profile.php' );
     
 }
 // ユーザーIDからユーザー名を取り出す
@@ -41,7 +41,6 @@ while ( $row = $SqlRes->fetch( PDO::FETCH_ASSOC ) ) {
 }
 ?>
 <link rel='stylesheet' href='css/style.css' type='text/css' media='all' />
-<?php include( "parts/css.php" ); ?>
 <?php include( "parts/header.php" ); ?>
 <style>
 html{
@@ -81,7 +80,7 @@ body {
                 <div class="input-group"style="margin-top:5px;">
                     <label class="input-group-btn">
                         <span class="btn btn-primary">
-                            画像ファイルを選択<input type="file" style="display:none" class="uploadFile">
+                            画像ファイルを選択<input type="file" style="display:none" class="uploadFile"name="file">
                         </span>
                     </label>
                     <input type="text" class="form-control" readonly="">

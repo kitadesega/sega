@@ -24,7 +24,6 @@ while ($adminmsg = $SqlRes->fetch(PDO::FETCH_ASSOC)) {
 }
 ?>
 <!doctype html>
-<?php include( "parts/css.php" ); ?>
 <style>
     .button_wrapper{
         text-align:center;
@@ -50,37 +49,34 @@ while ($adminmsg = $SqlRes->fetch(PDO::FETCH_ASSOC)) {
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-                <div class="col-xs-8">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <div class="panel-title">
-                                お問い合わせ
-                            </div>
-                            <?php if ( !isset( $_POST['comment'] ) ) { ?>
-                            <form method="post" action="Contact.php">
-                                <div class="form-group">
-                                    <label for="email"></label>
-                                    <input type="text" class="form-control" name="user" placeholder="<?php echo $_SESSION['userN']; ?>" size="10" readonly="readonly">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="comment">ご意見をどうぞ</label>
-                                    <textarea class="form-control" rows="3" name="comment" placeholder="ご意見をどうぞ"></textarea>
-                                </div>
-
-                                <input type="submit" class="btn btn-primary" value="送信">
-                            </form>
-                            <?php }else{ ?>
-                            <h1>ご意見ありがとうございました。</h1>
-                            <?php } ?>
-
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            お問い合わせ
                         </div>
+                        <?php if ( !isset( $_POST['comment'] ) ) { ?>
+                        <form method="post" action="Contact.php">
+                            <div class="form-group">
+                                <label for="email"></label>
+                                <input type="text" class="form-control" name="user" placeholder="<?php echo $_SESSION['userN']; ?>" size="10" readonly="readonly">
+                            </div>
 
-                        
-                        <!--panel-body-->
+                            <div class="form-group">
+                                <label for="comment">ご意見をどうぞ</label>
+                                <textarea class="form-control" rows="3" name="comment" placeholder="ご意見をどうぞ"></textarea>
+                            </div>
+
+                            <input type="submit" class="btn btn-primary" value="送信">
+                        </form>
+                        <?php }else{ ?>
+                        <h1>ご意見ありがとうございました。</h1>
+                        <?php } ?>
+
                     </div>
-                    <!--panel panel-info -->
+                    
+                    <!--panel-body-->
                 </div>
+                
                 <!--col-xs-12 col-md-7 -->
 
                 <!--row -->
@@ -95,7 +91,6 @@ while ($adminmsg = $SqlRes->fetch(PDO::FETCH_ASSOC)) {
                 </div>
                 <?php if (isset($msgAry)){
                           foreach ($msgAry as $msg){ ?>
-                     <div class="col-xs-6">
                         <table class = "table table-bordered"width="100%" align="center" cellpadding="3" cellspacing="0">
                                 <tbody>
                                     
@@ -106,14 +101,14 @@ while ($adminmsg = $SqlRes->fetch(PDO::FETCH_ASSOC)) {
                                          <div class="col-sm-10" style="padding: 3px;">
                                                 <div class="well"><?php echo $msg['text']; ?></div>
                                                 <?php  foreach ($adminmsgAry as $admin){
-                                                           if($msg['id'] == $admin['message_id']){ ?>
+                                                if($msg['id'] == $admin['message_id']){ ?>
                                             <div class="panel panel-info">
-                                                <div class="panel-heading">管理者からの返答</div>
-                                                    <div class="panel-body">
-                                                    <?php echo $admin['text'] ?>
-                                                    </div>
-                                                                                    <?php } ?>
-                                                                                    <?php } ?>
+                                            <div class="panel-heading">管理者からの返答</div>
+                                                <div class="panel-body">
+                                                <?php echo $admin['text'] ?>
+                                                </div>
+                                                    <?php } ?>
+                                                    <?php } ?>
                                             </div>
                                         　</div>
     
@@ -123,7 +118,6 @@ while ($adminmsg = $SqlRes->fetch(PDO::FETCH_ASSOC)) {
                                 </tbody>
                         </table>
                         
-                    </div>
                     
                         <?php } ?>
                 <?php } ?>
