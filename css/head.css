@@ -429,23 +429,23 @@ border-radius: 4px;
     height:auto;
 }
 .myprofile-head{
-    border-top: solid 1px #333333;
+    /*border-top: solid 1px #333333;
+    padding-top:10px;*/
     text-align:center;
     font-size:18px;
-    padding-top:10px;
     font-weight: bold; 
 }
 .myprofile-left{
     margin-left:10px;
     margin-right:10px;
-    width:30%;
+    width:35%;
     height:auto;
     float:left;
 }
 
 .myprofile-right{
     width:50%;
-    margin-left:7%;
+    margin-left:4%;
     height:auto;
     float:left;
 }
@@ -496,11 +496,12 @@ border-radius: 4px;
 
     .follow-info{
         float:left;
-        margin-left:5%;
+        margin-left:1%;
+        padding-right:3%;
     }
 
     .follow-info a{
-        font-size:12px;
+        font-size:15px;
     }
     .follow-info p{
         padding-left:5px;
@@ -766,4 +767,48 @@ float:right;
         margin-bottom:30px;
         
     }
-    
+
+    .notice-container{
+		width: 350px;
+		height:auto;
+		margin:0 auto;
+	  }
+
+	  .notice-icon-top{
+		float:left;
+		margin-top:5px;
+		width:50px;
+		height:60px;
+		
+    }
+    .block{
+		float:left;
+		margin-top:10px;
+		width:260px;
+		height:auto;
+		
+	}
+	  .notice-icon-top img{
+		padding:5px;
+		width: 5rem;
+		height: 5rem;
+		border-radius: 50%;
+		-moz-border-radius: 50%;
+		-webkit-border-radius: 50%;
+		object-fit: cover; /* ADD */
+	}
+	  .notice_item-content{
+		display:inline-block;
+		width:350px;
+		height:auto;
+		border-bottom: solid 1px #c8c8c8; 
+    }
+    .chat img{
+        width: 6rem;
+        height: 6rem;
+        border-radius: 50%;
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        object-fit: cover; /* ADD */
+        border: 1.5px solid #c8c8c8; 
+    }

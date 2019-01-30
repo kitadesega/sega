@@ -29,7 +29,7 @@ while ($row = $SqlRes->fetch(PDO::FETCH_ASSOC)): ?>
             <div class="line__right">
             <?php else: ?>
             <div class="line__left">
-                <figure>
+                <figure class="chat">
                     <img src="img/<?= $row['img']; ?>" />
                 </figure>
             <div class="line__left-text">

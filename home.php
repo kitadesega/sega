@@ -234,10 +234,14 @@ box-shadow: 0 1px 1px rgba(0,0,0,.05);
 
 </style>
 <?php include 'parts/header.php'; ?>
-
+<style>
+body {
+	background-color:#ffff;
+	color: #333333;
+}
+</style>
 <body>
     <div class="container">
-
         <div class="row">
             <!-- 残り8列はコンテンツ表示部分として使う -->
             <!-- <div class="col-xs-12"> -->
@@ -253,7 +257,8 @@ box-shadow: 0 1px 1px rgba(0,0,0,.05);
                         <div class="twitter__container">
                             <!-- タイトル
 
-                            <!-- 1.モーダルを表示する為のボタン -->
+                            1.モーダルを表示する為のボタン -->
+                            <p class="myprofile-head">ダイアリー</p> 
                             <button class="btn btn-primary" data-toggle="modal" data-target="#modal-sample">
                                 ツイート
                             </button>

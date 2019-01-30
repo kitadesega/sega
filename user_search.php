@@ -61,7 +61,7 @@ if (isset($_POST['tag']) && is_array($_POST['tag'])) {
         for ($j = 0; $j < 5; ++$j) {
             if ($users[$i]['tag1'] == $sqltag[$j] || $users[$i]['tag2'] == $sqltag[$j] || $users[$i]['tag3'] == $sqltag[$j] ||
                 $users[$i]['tag4'] == $sqltag[$j] || $users[$i]['tag5'] == $sqltag[$j]) {
-            $user_id = $users[$i]['user_id'];
+                    $user_id = $users[$i]['user_id'];
                     $SqlRes = NGO("select * from follows where user_id = $id AND follow_id = $user_id ");
                     $usera = $SqlRes->fetch(PDO::FETCH_ASSOC);
                 
@@ -84,18 +84,17 @@ if (isset($_POST['tag']) && is_array($_POST['tag'])) {
     .button_wrapper{
         text-align:center;
     }
-    
 </style>
 
 <body>
     <?php include 'parts/header.php'; ?>
-            <?php if (ua_smt() == true) { ?>
-                <style>
-                body {
-                    background-color:#fff;
-                    color: #333333;
-                }
-                </style>
+<?php if (ua_smt() == true) { ?>
+<style>
+body {
+    background-color:#fff;
+    color: #333333;
+}
+</style>
 <div class="container">
     <div class="row">
         <div class="panel panel-info">
@@ -156,7 +155,6 @@ if (isset($_POST['tag']) && is_array($_POST['tag'])) {
             <?php if (isset($userAry)) {
                     foreach ($userAry as $value) {?>
             <div class="search-user-container">
-
                 <div class="search-user-contents">
                 <div class="search-user-img">
                     <a>
@@ -179,7 +177,6 @@ if (isset($_POST['tag']) && is_array($_POST['tag'])) {
                         <button type="submit" style = "width:80px"class="btn btn-info btn-sm btn-round btn-outline info-active">フォロー中</button>
                     <?php } ?>
                 </div>
-                
             </div>
 
             <?php
@@ -209,13 +206,9 @@ if (isset($_POST['tag']) && is_array($_POST['tag'])) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php for ($i = 0; $i < $NumTag; $i = $i + 3) {
-                            ?>
+                                    <?php for ($i = 0; $i < $NumTag; $i = $i + 3) {?>
                                     <tr>
-                                        <?php
-                                    $z = 0;
-                                    while ($z < 3 && ($i + $z < $NumTag)) {
-                                    ?>
+                                        <?php $z = 0;while ($z < 3 && ($i + $z < $NumTag)) { ?>
                                             <td class="text-left col-xs-4 table-noborder">
                                                 <div class="pretty p-icon p-round p-pulse">
                                                     <input type="checkbox" name="tag[]" value="<?php echo $TagAry[$i + $z]['id']; ?>" />
@@ -225,9 +218,7 @@ if (isset($_POST['tag']) && is_array($_POST['tag'])) {
                                                     </div>
                                                 </div>
                                             </td>
-                                            <?php
-                                        ++$z;
-                                    } ?>
+                                        <?php  ++$z; } ?>
                                     </tr>
                                     <?php
                                 }?>
@@ -292,7 +283,6 @@ if (isset($_POST['tag']) && is_array($_POST['tag'])) {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>
-
 </html>
 <script>
     function toggleFollow(artistId){
@@ -313,8 +303,6 @@ if (isset($_POST['tag']) && is_array($_POST['tag'])) {
                         btn.addClass('on');
                         btn.html('<button type="submit" style = "width:80px"class="btn btn-info btn-sm btn-round btn-outline info-active">フォロー中</button>');
                     }
-               
-                
             }
         );
     }

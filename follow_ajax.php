@@ -10,6 +10,7 @@ if ( $_POST["follow"] == 0 ) {
     $user = $_POST["userID"];
 
     NGO( "INSERT INTO follows ( user_id,follow_id ) VALUES ( '$my','$user' ) ;" );
+    NGO( "INSERT INTO notice ( user_id,target_id ) VALUES ( '$my','$user' ) ;" );
 }
 
 //フォロー解除処理

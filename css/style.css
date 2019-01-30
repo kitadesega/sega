@@ -559,7 +559,7 @@ a:hover {
 .line__container .line__right .text {
     padding: 10px;
     border-radius: 20px;
-    background-color: #8de055;
+    background-color: #BAE3F9;
     margin: 0;
     margin-left: 80px;
 }
@@ -573,7 +573,7 @@ a:hover {
     height: 0;
     right: -10px;
     top: 10px;
-    border-left: 20px solid #8de055;
+    border-left: 20px solid #BAE3F9;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
 }
@@ -622,7 +622,7 @@ a:hover {
         max-width: 600px;
         margin: 20px auto;
         font-size: 80%;
-        border: solid 1px #eeeeee;
+        /*border: solid 1px #eeeeee;*/
     }
 }
 

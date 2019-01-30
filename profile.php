@@ -101,7 +101,6 @@ if (isset($followAry)) {
 //投稿のIDとフォローしている人、又は自分とIDが一致していれば$tweetAry配列に加える
 for ($i = 0; $i < $ALLtweetCNT; ++$i) {
     for ($j = 0; $j < $followCNT; ++$j):
-
         if (isset($followAry)) {
             if ($ALLtweet[$i]['user_id'] == $followAry[$j]['user_id'] || $ALLtweet[$i]['user_id'] == $user) {
                 $tweetAry[] = $ALLtweet[$i];
@@ -189,10 +188,9 @@ if (isset($Favocheck)) {
 $OMG = NGO('select * from output');
 while ($output = $OMG->fetch(PDO::FETCH_ASSOC)) {
     for ($i = 0; $i < $FavocheckCNT; ++$i):
-        if ($Favocheck[$i] == $output['id']) {
+        if ($Favocheck[$i] == $output['id']){
             $Favolist[] = $output;
         }
-
     endfor;
 }
 ?>
@@ -207,35 +205,35 @@ while ($output = $OMG->fetch(PDO::FETCH_ASSOC)) {
     });
 </script>
 <style>
-    @media screen and (max-width: 680px)and (min-width: 330px) {
-        textarea {
-            resize: horizontal;
-            width:300px;
-            height:200px;
-        }
+@media screen and (max-width: 680px)and (min-width: 330px) {
+    textarea {
+        resize: horizontal;
+        width:300px;
+        height:200px;
     }
-    @media screen and (max-width: 330px) {
-        textarea {
-            resize: horizontal;
-            width:250px;
-            height:170px;
-        }
+}
+@media screen and (max-width: 330px) {
+    textarea {
+        resize: horizontal;
+        width:250px;
+        height:170px;
     }
-    .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
-        color: #fdfdfe;
-        cursor: default;
-        background-color: #7ab800;
-        border: 1px solid #71c6c1;
-        border-bottom-color: transparent;
-    }
-    .panel {
-        margin-bottom: 10px;
-        background-color: #fff;
-        padding-bottom: 15px;
-        border-radius: 2px;
-        -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
-        box-shadow: 0 1px 1px rgba(0,0,0,.05);
-    }
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    color: #fdfdfe;
+    cursor: default;
+    background-color: #7ab800;
+    border: 1px solid #71c6c1;
+    border-bottom-color: transparent;
+}
+.panel {
+    margin-bottom: 10px;
+    background-color: #fff;
+    padding-bottom: 15px;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
     
 </style>
 <?php include 'parts/header.php'; ?>
@@ -253,22 +251,22 @@ body {
     <div id="" class="myprofile-container">
         <p class="myprofile-head">プロフィール</p> 
         <div class="myprofile-left">
-                <div class = "myprofile-image">
-                        <img src="img/<?php echo $imgurl; ?>" />
+            <div class = "myprofile-image">
+                    <img src="img/<?php echo $imgurl; ?>" />
+            </div>
+            <div class="follow-innfo-container">
+                <div class="follow-info">
+                    <a href="followlist.php">フォロー
+                    <p><?php echo $ECHOfollowCNT; ?></p>
+                    </a>
                 </div>
-                <div class="follow-innfo-container">
-        <div class="follow-info">
-        <a>フォロー</a>
-        <p><?php echo $ECHOfollowCNT; ?></p>
+                <div class="follow-info">
+                    <a href="followerlist.php">フォロワー
+                    <p><?php echo $followerCNT; ?></p>
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="follow-info">
-        <a>フォロワー</a>
-        <p><?php echo $followerCNT; ?></p>
-        </div>
-        </div>
-
-        </div>
-       
         
         <div class = "myprofile-right">
             <div class = "myprofile-info">
@@ -333,7 +331,6 @@ body {
                                 <?php echo $followerCNT; ?></a><a href="#tabtest2" data-toggle="tab" style="font-size:14px;">/フォロー
                                 <?php echo $ECHOfollowCNT; ?></a>
                             <br />
-
                             <br />
                             <?php
                             for ($i = 1; $i <= 5; ++$i):    //5個設定できるタグの数だけ繰り返し

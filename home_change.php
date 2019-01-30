@@ -64,6 +64,7 @@ body {
 </style>
 
 <div class = "profile-edit">
+<p class="myprofile-head">プロフィール変更</p> 
     <div class = "profile-edit-container">
         <form action="home_change.php" method="post" enctype="multipart/form-data">
             <div class = "profile-edit-image">

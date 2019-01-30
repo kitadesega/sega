@@ -341,7 +341,7 @@ a.disabled{
 	  width: 100%;
 	  position: relative;
 	  display: block;
-	  margin-bottom: 35px;
+      margin-bottom: 35px;
 	  max-width: 80%;
 	  clear: both;
   }
@@ -349,7 +349,7 @@ a.disabled{
   /* アイコン画像 */
   .line__container .line__left figure {
 	  width: 80px;
-	  position: absolute;
+      position: absolute;
 	  top: -5px;
 	  left: 0;
 	  padding: 0;
@@ -365,7 +365,6 @@ a.disabled{
   }
   
   .line__container .line__left .line__left-text {
-  
 	margin-left: 100px;
   }
   
@@ -380,7 +379,7 @@ a.disabled{
 	position: relative;
 	padding: 10px;
 	border-radius: 20px;
-	background-color: #ffffff;
+	background-color:#BAE3F9;
   }
   
   /* 吹き出し */
@@ -392,7 +391,7 @@ a.disabled{
 	height: 0;
 	left: -10px;
 	top: 10px;
-	border-right: 20px solid #ffffff;
+	border-right: 20px solid #BAE3F9;
 	border-top: 10px solid transparent;
 	border-bottom: 10px solid transparent;
   }
@@ -412,7 +411,7 @@ a.disabled{
   .line__container .line__right .text {
 	padding: 10px;
 	border-radius: 20px;
-	background-color: #8de055;
+	background-color: #BAE3F9;
 	margin: 0;
 	margin-left: 80px;
   }
@@ -426,7 +425,7 @@ a.disabled{
 	height: 0;
 	right: -10px;
 	top: 10px;
-	border-left: 20px solid #8de055;
+	border-left: 20px solid #BAE3F9;
 	border-top: 10px solid transparent;
 	border-bottom: 10px solid transparent;
   }

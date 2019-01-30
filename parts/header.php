@@ -25,6 +25,7 @@
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                 <li><a href="profile.php">プロフィール</a></li>
+                <li><a href="notice.php">お知らせ</a></li>
                 <li><a href="home_change.php">プロフィール変更</a></li>
                 <li><a href="tagdisp.php">タグ設定</a></li>
                 <li><a href="Contact.php">お問い合わせ</a></li>

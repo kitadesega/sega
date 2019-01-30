@@ -41,7 +41,8 @@ $_SESSION["Auser"] = $_GET["Fuser"];
 if ( isset( $_POST["Fuser"] ) ) {
     $_SESSION["Auser"] = $_POST["Fuser"];
     }
-    $user = $_SESSION["Auser"];
+	$user = $_SESSION["Auser"];
+	echo $user;
 // ユーザーIDからユーザー名を取り出す
 $result = NGO( "SELECT * FROM users WHERE user_id=" . $user . "" );
 // ユーザー情報の取り出し

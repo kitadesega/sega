@@ -129,7 +129,7 @@ if ($sIn == "logIn") {//入室画面から入室した時の処理
                         </div>
                         <hr>
                         <table class="col-xs-12  col-md-12">
-                            <td style="background:#bcbcbc">
+                            <td style="background:white">
                                 <div class="line__container">
                                     <div class="line__contents scroll">
 
@@ -159,7 +159,7 @@ if ($sIn == "logIn") {//入室画面から入室した時の処理
                         <a style="font-size:16px;">チャットルーム名：<span style="color:red;font-size:16px;">
                                 <?= $chatname ?></span>
                             ハンドル名：<span style="color:red;">
-                                <?= $sHandle ?></a><img src="img/<?php print $_SESSION['userNimg']; ?>" style="margin-left:30px;" class="img-circle" width="60" /></span><br />
+                                <?= $sHandle ?></a><span class="chat"><img src="img/<?php print $_SESSION['userNimg']; ?>" style="margin-left:30px;" class="img-circle" width="60" /></span></span><br />
                         <?php
                         include( "userlist.php" );
                         ?>
