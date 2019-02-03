@@ -324,7 +324,6 @@ body {
                                         $row = $SqlRes->fetch(PDO::FETCH_ASSOC);
                                         if ($row['num'] != 0):
                                                 ?>
-
                                                 <!-- 折りたたみ展開ボタン -->
                                                 <div onclick="obj=document.getElementById('<?php echo $tweet['id']; ?>').style; obj.display=(obj.display=='none')?'block':'none';">
                                                     <a style="cursor:pointer; font-size:12px;">　▼ 返信を表示</a>
