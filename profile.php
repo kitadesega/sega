@@ -243,7 +243,7 @@ while ($output = $OMG->fetch(PDO::FETCH_ASSOC)) {
 //background-color: #fafafa ?>
 <style>
 body {
-	background-color:#fff;
+	background-color:#fffe;
 	color: #333333;
 }
 </style>
@@ -306,8 +306,8 @@ body {
                     endfor; //5回繰り返し処理終わり
                     ?>
             </p>
-        </div>
-    </div>      
+            </div>
+        </div>      
     <div class="clear"></div>
 </div>
       
