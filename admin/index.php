@@ -38,7 +38,9 @@ if (isset($RowAry)) {
                 </div>
                 <?php for ($i = 0; $i < $NumRows; $i++) { ?>
                     <div class="col-lg-3 col-sm-6 text-center mb-4">
-                        <img class="rounded-circle img-fluid d-block mx-auto" src="../img/<?php print $RowAry[$i]["user_img"]; ?>" width="100" alt="">
+                    <div class = "myprofile-image">
+                        <img src="../img/<?php print $RowAry[$i]["user_img"]; ?>" width="100" alt="">
+                    </div>
                         <h3>
                             <small><?php print $RowAry[$i]["user_id"]; ?>:<?php echo $RowAry[$i]["username"]; ?></small>
                         </h3>

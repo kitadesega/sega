@@ -130,8 +130,7 @@ body {
                                             </div>
                                         </td>
                                         <?php
-                                        ++$z;
-                                    } ?>
+                                        ++$z; } ?>
                                 </tr>
                                 <?php }?>
                             </tbody>

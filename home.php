@@ -196,7 +196,6 @@ while ($output = $OMG->fetch(PDO::FETCH_ASSOC)) {
     endfor;
 }
 ?>
-<link rel='stylesheet' href='css/style.css' type='text/css' media='all' />
 <script type="text/javascript">
     $(document).ready(function() {
         var url = document.location.toString();

@@ -296,7 +296,7 @@ a.disabled{
 /*チャットのテキストの奴だよ*/
 
 .unko{
-	font-size:12px;
+	font-size:0.7em;
 	color:black;
 }
 
@@ -409,7 +409,8 @@ a.disabled{
   
   /* コメントエリア */
   .line__container .line__right .text {
-	padding: 10px;
+    padding: 10px;
+    padding-top:0px;
 	border-radius: 20px;
 	background-color: #BAE3F9;
 	margin: 0;
@@ -448,6 +449,9 @@ a.disabled{
 	font-size: 80%;
 	color: #ffffff;
   }
+
+
+
   
   
   

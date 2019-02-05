@@ -123,8 +123,10 @@ if (isset($_POST['delete']) && $_POST['delete'] == "削除") {
                         </div>
                         <!-- ファイルアップロード -->
                         <div class="form-group">
+                        <div class="admin-image-change">
                             <img class="rounded-circle img-fluid d-block mx-auto" src="../img/<?php print $Row["user_img"]; ?>"
                                  width="100" alt="">
+                        </div>
 
                             <label>プロフィール画像変更</label>
                             <input type="file" name="upfname">

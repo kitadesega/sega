@@ -18,7 +18,7 @@
     $NumRows = count($RowAry);
     ?>
 
-    <a style ="font-size:16px;">入室者一覧：<span style="color:red;">
+    <a style ="font-size:16px;"><span style="color:red;">
     <?php if (ua_smt() == true) { ?>
             <?php
             if ($NumRows >= 0) {
@@ -58,8 +58,8 @@
             }
             ?>
     <?php } ?></span><br />
-        <a style ="font-size:16px;">入室者数：<?php
+        <a style ="font-size:16px;"><!--入室者数：--><?php
             $SqlRes = NGO("select count( roomid ) from user_tbl where roomid = $chatid");
 
             $Row = $SqlRes->fetch(PDO::FETCH_ASSOC)
-            ?><span style="color:red;"><?= $Row["count( roomid )"] ?></span></a></div>
+            ?><!--<span style="color:red;"><?= $Row["count( roomid )"] ?></span></a>--></div>

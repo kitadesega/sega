@@ -1,6 +1,6 @@
 <?php
 header("Content-Type:text/html; charset=UTF-8");
-session_start(  );
+session_start();
 include( "parts/function.php" );
 if ( !isset( $_SESSION['user'] ) ) {
     header( "Location: index.php" );

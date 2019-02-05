@@ -534,4 +534,26 @@ body {
   color: #ffffff;
 }
 
+.myprofile-image img{
+
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    object-fit: cover; /* ADD */
+    border: 1.5px solid #c8c8c8; 
+}
+
+.admin-image-change img{
+
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    object-fit: cover; /* ADD */
+    border: 1.5px solid #c8c8c8; 
+}
+
 
