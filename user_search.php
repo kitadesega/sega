@@ -85,64 +85,71 @@ if (isset($_POST['tag']) && is_array($_POST['tag'])) {
         text-align:center;
     }
 </style>
+<?php include 'parts/header.php'; ?>
 
 <body>
-    <?php include 'parts/header.php'; ?>
 <?php if (ua_smt() == true) { ?>
 <style>
 body {
     background-color:#fff;
     color: #333333;
 }
+ul {
+  list-style: none;
+}
+
+input#search-text {
+border: 1px solid #c8c8c8; 
+border-radius:20px;
+box-shadow: none;
+padding: 8px 10px;
+width:300px;
+}
+
+input#search-text:focus {
+    outline: none;
+}
+.tag-area{
+height:120px;
+border: 1px solid #c8c8c8; 
+overflow: auto;
+}
+
+
 </style>
 <div class="container">
     <div class="row">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <div class="panel-title">
-                    タグリスト
-                </div>
-            </div>
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <form method="POST" action="user_search.php">
-                        <br/>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th class="text-center" COLSPAN="3">ALL TAG</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php for ($i = 0; $i < $NumTag; $i = $i + 3) {   ?>
-                                <tr>
-                                    <?php
-                                    $z = 0;
-                                    while ($z < 3 && ($i + $z < $NumTag)) {
-                                    ?>
-                                        <td class="text-left col-xs-4 table-noborder">
-                                            <div class="pretty p-icon p-round p-pulse">
-                                                <input type="checkbox" name="tag[]" value="<?php echo $TagAry[$i + $z]['id']; ?>" />
-                                                <div class="state p-success">
-                                                    <i class="icon mdi mdi-check"></i>
-                                                    <label><a class = "a"><?php echo $TagAry[$i + $z]['tag_name']; ?></a></label>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <?php
-                                        ++$z; } ?>
-                                </tr>
-                                <?php }?>
-                            </tbody>
-                        </table>
-                        <div class="button_wrapper">
-                            <button type="submit" class="btn btn-primary">検索</button>
-                    </form>
+        <form method="POST" action="user_search.php">
+            <br/>
+                    <h1 style="text-align:center">
+                        <th style="text-align:center">ALL TAG</th>
+                    </h1>
+                    <div style="text-align:center;">
+                    <div class = "profile-edit-name">
+                    <input type="text" id="search-text" placeholder="検索ワードを入力">
                     </div>
+                    </div>
+                        <div class="tag-area">
+                            <ul class="target-area">
+                            <?php foreach($TagAry as $tag){ ?>
+                                <li style="float:left;">
+                                    <div class="pretty p-icon p-round p-pulse">
+                                        <input type="checkbox" name="tag[]" value="<?php echo $tag['id']; ?>">
+                                        <div class="state p-success">
+                                            <i class="icon mdi mdi-check"></i>
+                                            <label><a style="margin-top:5px;"><?php echo $tag['tag_name']; ?></a></label>
+                                        </div>
+                                    </div>
+                                </li>
+                            <?php } ?>
+                            </ul>
+                        </div>
+                    <div class="clear"></div>
+                <div class="button_wrapper">
+                    <button type="submit" class="btn btn-primary">検索</button>
                 </div>
+        </form>
                 <br/>
-            </div>
-        </div>
         <div class="panel panel-info">
             <div class="panel-heading">
                 <div class="panel-title" style="text-align:center">
@@ -305,4 +312,26 @@ body {
             }
         );
     }
+</script>
+<script>
+ $(function () {
+  searchWord = function(){
+    var searchText = $(this).val(), // 検索ボックスに入力された値
+        targetText;
+
+    $('.target-area li').each(function() {
+      targetText = $(this).text();
+
+      // 検索対象となるリストに入力された文字列が存在するかどうかを判断
+      if (targetText.indexOf(searchText) != -1) {
+        $(this).removeClass('hidden');
+      } else {
+        $(this).addClass('hidden');
+      }
+    });
+  };
+
+  // searchWordの実行
+  $('#search-text').on('input', searchWord);
+});
 </script>

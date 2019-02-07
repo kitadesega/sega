@@ -80,12 +80,25 @@ if (isset($_POST["chatid"])) {
     NGO("delete from room_tbl where roomid = '$chatid'");
     header('Location: chat_list.php');
 }
-//ここからチャットを作る画面
+
+$SqlRes4 = NGO('select * from tag where Decision = 0');
+while ($Row = $SqlRes4->fetch(PDO::FETCH_ASSOC)) {
+    $TagAry[] = $Row;
+}
 ?>
 <script src="js/ajax.js"></script>
 <title>ページタイトル</title>
 <?php include( "parts/header.php" ); ?>
 <body>
+<style>
+ul {
+  list-style: none;
+}
+.tag-area{
+    height:60px;
+    overflow: auto;
+}
+</style>
     <div class="container">
         <div class="col-xs-12">
             <div class="panel panel-warning">
@@ -114,22 +127,22 @@ if (isset($_POST["chatid"])) {
                     </div>
                     <div class="row">
                         <div class="col-sm-8 form-inline" style="padding: 3px;">
-                     <?php
-                     for ($i = 1; $i <= 5; $i++):    //5個設定できるタグの数だけ繰り返し
-                         $Name = ${"tagN" . $i}['tag_name'];
-                         $TAG = ${"tagN" . $i}['id'];
-                         if ($Name != ""):      //タグが入っているかの判定
-                     ?><div class="pretty p-icon p-round p-pulse" style="margin-top:10px;">
-                                    <input type="radio" name="tag"  value="<?php echo $TAG ?>" />
-                                    <div class="state p-success"style="margin-top:0px;" >
-                                                            <i class="icon mdi mdi-check"></i>
-                                                            <label><a class = "a"><?php echo $Name ?></a></label>
-                                                        </div>
-                             <?php                             
-                         endif;//タグが入っているどうかの判定の閉じ
-                             ?></div><?php
-                     endfor; //5回繰り返し処理終わり
-                                     ?>
+                        <input type="text" id="search-text" placeholder="検索ワードを入力">
+                            <div class="tag-area">
+                                <ul class="target-area">
+                                    <?php foreach($TagAry as $tag){ ?>
+                                        <li style="float:left;">
+                                            <div class="pretty p-icon p-round p-pulse">
+                                                <input type="radio" name="TAGsearch" value="<?php echo $tag['id']; ?>">
+                                                <div class="state p-success">
+                                                    <i class="icon mdi mdi-check"></i>
+                                                    <label><a style="margin-top:5px;"><?php echo $tag['tag_name']; ?></a></label>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    <?php } ?>
+                                </ul>
+                            </div>
                         </div><br/><br/>
                     </div>
                     <div class="row">
@@ -152,3 +165,25 @@ if (isset($_POST["chatid"])) {
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>
 </html>
+<script>
+ $(function () {
+  searchWord = function(){
+    var searchText = $(this).val(), // 検索ボックスに入力された値
+        targetText;
+
+    $('.target-area li').each(function() {
+      targetText = $(this).text();
+
+      // 検索対象となるリストに入力された文字列が存在するかどうかを判断
+      if (targetText.indexOf(searchText) != -1) {
+        $(this).removeClass('hidden');
+      } else {
+        $(this).addClass('hidden');
+      }
+    });
+  };
+
+  // searchWordの実行
+  $('#search-text').on('input', searchWord);
+});
+</script>

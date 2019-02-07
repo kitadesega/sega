@@ -43,6 +43,10 @@ if (isset($RowAry)) {
 ?>
 	<?php include 'parts/header.php'; ?>
 	<style>
+	body {
+	background-color:#fffe;
+	color: #333333;
+}
 		.kadomaru{
 		        border-radius: 10px;
 		    }
@@ -50,6 +54,7 @@ if (isset($RowAry)) {
 		    .uekadomaru{
 		       border-radius: 10px 10px 0px 0px;
 		    }
+			
 	</style>
 	<body>
 		<div class="container">

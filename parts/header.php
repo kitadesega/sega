@@ -48,8 +48,8 @@
                 <li class="<?php if ($_SERVER['SCRIPT_NAME'] == '/sega/chat_list.php') { echo ' active';} ?> ">
                     <a href="chat_list.php"><img src="svg/chat.svg" width="24" height="24"><br />チャット </a>
                 </li>
-                <li class="header-head <?php if ($_SERVER['SCRIPT_NAME'] == '/sega/user_search.php') {echo ' active';} ?>">
-                    <a href="user_search.php"><img src="svg/search.svg"><br />検索</a>
+                <li class="<?php if ($_SERVER['SCRIPT_NAME'] == '/sega/user_search.php') {echo ' active';} ?>">
+                    <a href="user_search.php"><img src="svg/search.svg" width="24" height="24"><br />検索</a>
                 </li>
             </ul>
         </div><!-- container -->

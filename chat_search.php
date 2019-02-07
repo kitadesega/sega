@@ -57,7 +57,10 @@ if (isset($_POST['Keysearch'])) {
         }
     }
 }
-
+$SqlRes4 = NGO('select * from tag where Decision = 0');
+while ($Row = $SqlRes4->fetch(PDO::FETCH_ASSOC)) {
+    $TagAry[] = $Row;
+}
 //ルームの　タグ　での検索処理
 if (isset($_POST['TAGsearch'])) {
     $TAGsearch = $_POST['TAGsearch'];
@@ -91,25 +94,35 @@ if (isset($_POST['TAGsearch'])) {
 ?>
 <?php include 'parts/header.php'; ?>
 <body>
+<style>
+body {
+	background-color:#fffe;
+	color: #333333;
+}
+ul {
+  list-style: none;
+}
+.tag-area{
+    height:100px;
+    overflow: auto;
+}
+</style>
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-
-                    </div>
+                    
                     <div class="panel-body">
                         <div class ="col-xs-12">
                             <label>キーワード検索</label>
                             <form style="display: inline" method="post" action="chat_search.php">
-                            <div class="input-group" style ="width:70%;">
+                            <div class="input-group" style ="width:100%;">
                                 <input type="text" class="form-control" name = "Keysearch">
                                 <span class="input-group-btn">
                                     <button type="submit" class="btn btn-primary">検索</button>
                                 </span>
                             </div>
                             </form>
-                            <br/><div class="input-group text-center " style = "width:70%;">
+                            <br/><div class="input-group text-center " style = "width:100%;">
                                 <label>タグで検索</label>
                             <form style="display: inline" method="post" action="chat_search.php">
                                 <span class="input-group-btn">
@@ -118,30 +131,28 @@ if (isset($_POST['TAGsearch'])) {
                             </div>
                             <div class="row">
                                 <div class="col-xs-12 form-inline">
-
-                                    <?php
-                                    for ($i = 1; $i <= 5; ++$i):    //5個設定できるタグの数だけ繰り返し
-                                        $Name = ${'tagN'.$i}['tag_name'];
-                                        $TAG = ${'tagN'.$i}['id'];
-                                        if ($Name != ''):      //タグが入っているかの判定
-                                    ?>
-                                            <div class="pretty p-icon p-round p-pulse" style="margin-top:10px;">
-                                                <input type="radio" name="TAGsearch"  value="<?php echo $TAG; ?>" />
-                                                <div class="state p-success">
-                                                    <i class="icon mdi mdi-check"></i>
-                                                    <label><a class = "a"><?php echo $Name; ?></a></label>
-                                                </div>
-                                                <?php
-                                        endif; //タグが入っているどうかの判定の閉じ
-                                                ?></div><?php
-                                    endfor; //5回繰り返し処理終わり
-                                                        ?>
+                                    <input type="text" id="search-text" placeholder="検索ワードを入力">
+                                    <div class="tag-area">
+                                        <ul class="target-area">
+                                            <?php foreach($TagAry as $tag){ ?>
+                                                <li style="float:left;">
+                                                    <div class="pretty p-icon p-round p-pulse">
+                                                        <input type="radio" name="TAGsearch" value="<?php echo $tag['id']; ?>">
+                                                        <div class="state p-success">
+                                                            <i class="icon mdi mdi-check"></i>
+                                                            <label><a style="margin-top:5px;"><?php echo $tag['tag_name']; ?></a></label>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            <?php } ?>
+                                        </ul>
+                                    </div>
                                 </div>
                             </form><br/><br/>
                             </div>
                         </div>
                     </div>
-                </div>
+                
 
                 <?php for ($i = 0; $i < $NumRows; ++$i) {
                 ?>
@@ -236,3 +247,25 @@ if (isset($_POST['TAGsearch'])) {
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>
 </html>
+<script>
+ $(function () {
+  searchWord = function(){
+    var searchText = $(this).val(), // 検索ボックスに入力された値
+        targetText;
+
+    $('.target-area li').each(function() {
+      targetText = $(this).text();
+
+      // 検索対象となるリストに入力された文字列が存在するかどうかを判断
+      if (targetText.indexOf(searchText) != -1) {
+        $(this).removeClass('hidden');
+      } else {
+        $(this).addClass('hidden');
+      }
+    });
+  };
+
+  // searchWordの実行
+  $('#search-text').on('input', searchWord);
+});
+</script>

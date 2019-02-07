@@ -38,24 +38,12 @@ for ($i = 1; $i <= 5; ++$i) {
     ${'tagN'.$i} = NGOpro(${'tag'.$i});
 }
 
-//投稿の処理
-if (isset($_POST['contents'])) {
-    $handle = $_SESSION['userN'];
-    $img = $_SESSION['userNimg'];
-    $contents = $_POST['contents'];
-    NGO("insert into tweet_tbl values
-( null,'$user',null,'$handle','$img','$contents',null )");
-    header('Location: home.php');
-}
-
 //返信の処理
 if (isset($_POST['contents2'])) {
-    $handle = $_SESSION['userN'];
-    $img = $_SESSION['userNimg'];
     $contents2 = $_POST['contents2'];
     $Replyid = $_POST['Replyid'];
     NGO("insert into tweet_tbl values
-( null,'$user','$Replyid','$handle','$img','$contents2',null )");
+    ( null,'$user','$Replyid','$contents2',null,null,null )");
     header('Location: home.php');
 }
 
@@ -65,16 +53,52 @@ if (isset($_GET['Auser'])) {
     NGO("delete from tweet_tbl where id = '$deltl'");
     header('Location: home.php');
 }
-
-//宛先無しの投稿を全て取り出す
-$SqlRes = NGO('select * from tweet_tbl where target_id IS NULL order by dataTime desc ;');
+//お気に入り取得
+$SqlRes = NGO("select * from favorite where user_id = '$user'");
 while ($Row = $SqlRes->fetch(PDO::FETCH_ASSOC)) {
+$My_favo[]=$Row;
+}
+
+//タグのデータを摘出
+$SqlRes = NGO('select * from tag where Decision = 0');
+while ($Row = $SqlRes->fetch(PDO::FETCH_ASSOC)) {
+    $all_tag[] = $Row;
+}
+//宛先無しの投稿を全て取り出す
+$SqlRes = NGO("select * from tweet_tbl where target_id IS NULL AND user_id = $user order by dataTime desc ;");
+while ($Row = $SqlRes->fetch(PDO::FETCH_ASSOC)) {
+    $SqlRes2        = NGO("select * from users where user_id = " . $Row['user_id'] . "");
+    $tmp_u_data     = $SqlRes2->fetch(PDO::FETCH_ASSOC);
+    $Row["handle"]  = $tmp_u_data["username"];
+    $Row["img"]     = $tmp_u_data["user_img"];
+    //お気に入り判定
+    $Row["favo_flg"] = false;
+    for($i=0;$i<count($My_favo); $i++){
+        if($Row["id"] == $My_favo[$i]["favorite_id"]){
+            $Row["favo_flg"] = true;
+            break;
+        }
+    }
+    if($Row["tag_id"]!="" || $Row["tag_id"]!=NULL){
+        $tmp_tag        = $Row["tag_id"];
+        $keyIndex       = array_search("$tmp_tag", array_column($all_tag, 'id'));
+        $Row['tag_name'] = $all_tag[$keyIndex]['tag_name'];
+    }else{
+        $Row['tag_name'] = NULL;
+    }
+    //タグの名前
     $ALLtweet[] = $Row;
+}
+
+foreach($ALLtweet as $tweet){
+    if($tweet['favo_flg']==true){
+        $Favotweet[] = $tweet;
+    }
 }
 if (isset($ALLtweet)) {
     //投稿の数をカウント
     $ALLtweetCNT = count($ALLtweet);
-} else {
+    } else {
     $ALLtweetCNT = 0;
 }
 
@@ -118,6 +142,10 @@ for ($i = 0; $i < $ALLtweetCNT; ++$i) {
 //誰かに対して投稿した投稿を取り出す
 $SqlRes = NGO('select * from tweet_tbl where target_id IS NOT NULL;');
 while ($Row = $SqlRes->fetch(PDO::FETCH_ASSOC)) {
+    $SqlRes2    = NGO("select * from users where user_id = " . $Row['user_id'] . "");
+    $tmp_u_data = $SqlRes2->fetch(PDO::FETCH_ASSOC);
+    $Row["handle"] = $tmp_u_data["username"];
+    $Row["img"] = $tmp_u_data["user_img"];
     $ReplyAry[] = $Row;
 }
 if (isset($ReplyAry)) {
@@ -133,77 +161,25 @@ while ($row2 = $SqlRes2->fetch(PDO::FETCH_ASSOC)) {
     //自分をフォローしてくれてる人のユーザー情報を配列に。
 }
 $followerCNT = '0';
+
 //自分をフォローしてくれている人の数をカウント
 if (isset($followerAry)) {
     $followerCNT = count($followerAry);
 }
-//画像削除処理
-if (isset($_POST['deleteimg'])) {
-    $imgid = $_POST['deleteimg'];
-    NGO("DELETE FROM `output` WHERE id = '$imgid'");
-    NGO("DELETE FROM `favorite` WHERE favorite_id = '$imgid'");
-}
 
-//自分のライブラリ画像を取り出す
-$OMG = NGO("select * from output where user_id = '$user'");
-while ($myimage = $OMG->fetch(PDO::FETCH_ASSOC)) {
-    $imgAry[] = $myimage;
-    $tagid = $myimage['tag_id'];
-    $sqls = NGO("select * from tag where id = '$tagid'");
-    $sqR = $sqls->fetch(PDO::FETCH_ASSOC);
-    $tags[] = $sqR;
-}
-if (isset($imgAry)) {
-    $imgCNT = count($imgAry);
-} else {
-    $imgCNT = 0;
-}
 
-//お気に入り処理
-if (isset($_POST['favoID'])) {
-    $favoID = $_POST['favoID'];
-    NGO("INSERT INTO `favorite`(`id`, `user_id`, `favorite_id`) VALUES (null,'$user','$favoID')");
-    header('Location: profile.php#tabtest4');
-}
-
-//お気に入り解除
-if (isset($_POST['anfavoID'])) {
-    $anfavoID = $_POST['anfavoID'];
-    NGO("DELETE FROM `favorite` WHERE user_id = '$user' AND favorite_id = '$anfavoID'");
-    header('Location: profile.php#tabtest4');
-}
-
-//お気に入りをしているかしていないかの判断
-$SqlRes = NGO("SELECT * FROM favorite where user_id = '$user' ");
-while ($row = $SqlRes->fetch(PDO::FETCH_ASSOC)) {
-    $Favocheck[] = $row['favorite_id'];
-}
-if (isset($Favocheck)) {
-    $FavocheckCNT = count($Favocheck);
-} else {
-    $FavocheckCNT = 0;
-}
-
-//全てのライブラリからお気に入りしているものを取り出す
-$OMG = NGO('select * from output');
-while ($output = $OMG->fetch(PDO::FETCH_ASSOC)) {
-    for ($i = 0; $i < $FavocheckCNT; ++$i):
-        if ($Favocheck[$i] == $output['id']){
-            $Favolist[] = $output;
-        }
-    endfor;
+$SqlRes4 = NGO('select * from tag where Decision = 0');
+while ($Row = $SqlRes4->fetch(PDO::FETCH_ASSOC)) {
+    $TagAry[] = $Row;
 }
 ?>
+
+
 <link rel='stylesheet' href='css/style.css' type='text/css' media='all' />
-<script type="text/javascript">
-    $(document).ready(function() {
-        var url = document.location.toString();
-        if (url.match('#')) {
-            $('.nav-tabs a[href="#' + url.split('#')[1] + '"]').tab('show');
-            $('.nav-tabs a').removeClass('active');
-        }
-    });
-</script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js" type="text/javascript"></script>
 <style>
 @media screen and (max-width: 680px)and (min-width: 330px) {
     textarea {
@@ -246,8 +222,20 @@ body {
 	background-color:#fffe;
 	color: #333333;
 }
+ul {
+  list-style: none;
+}
+.tag-area{
+    height:50px;
+    overflow: auto;
+}
 </style>
 <div class = "myprofile-row">
+
+    </div>
+
+    
+  </div><!-- /.wrapper -->
     <div id="" class="myprofile-container">
         <p class="myprofile-head">プロフィール</p> 
         <div class="myprofile-left">
@@ -314,7 +302,6 @@ body {
 <?php }else{ ?>
     <div class="container">
         <div class="row">
-            <!-- 残り8列はコンテンツ表示部分として使う -->
             <div class="">
                 <div class="panel panel-warning">
                     <div class="panel-heading">
@@ -355,7 +342,7 @@ body {
                     <div id="bottom">
                         <ul class="nav nav-tabs panel" style="">
                             <li class="active"><a href="#tabtest1" data-toggle="tab">タイムライン</a></li>
-                            <li><a href="#tabtest4" data-toggle="tab">ライブラリ</a></li>
+                            <li><a href="#tabtest4" data-toggle="tab">メディア</a></li>
                             <li><a href="#tabtest3" data-toggle="tab">お気に入り</a></li>
                         </ul>
                     </div>
@@ -363,15 +350,8 @@ body {
                     <div class="tab-content">
                         <!---------- タイムラインの表示-------->
                         <div class="tab-pane active" id="tabtest1">
-                            <!-- <table align="center" cellpadding="3" cellspacing="0">
-                        <tbody>
-                        <tr>
-                        <td> 横幅めいっぱい使いたいのでコメント化一応消さずに残しておく。-->
                             <!-- ▼twitter風ここから -->
                             <div class="twitter__container">
-                                <!-- タイトル
-                                <div class="twitter__title">
-                                </div>-->
                                 <!-- 1.モーダルを表示する為のボタン -->
                                 <button class="btn btn-primary" data-toggle="modal" data-target="#modal-sample">
                                     ツイート
@@ -390,8 +370,36 @@ body {
                                             </div>
                                             <!-- 5.モーダルのボディ -->
                                             <div class="modal-body">
-                                                <form method="POST" action="home.php">
-                                                    <textarea name="contents" autofocus rows="8" cols="40"></textarea><br>
+                                            <form method="POST" action="output_upload.php"  enctype="multipart/form-data">
+                                                    <textarea name="contents" autofocus rows="8" cols="40"></textarea>
+                                                    <br>
+                                                    <br/>
+                                                    <div class="input-group">
+                                                        <label class="input-group-btn">
+                                                            <span class="btn btn-primary">
+                                                                Choose File<input type="file" style="display:none"name="fname">
+                                                            </span>
+                                                        </label>
+                                                        <input type="text" class="form-control" readonly="">
+                                                    </div>
+                                                    <br/>
+                                                    <input type="text" id="search-text" placeholder="検索ワードを入力">
+                                                    <div class="tag-area">
+                                                    <ul class="target-area">
+                                                    <?php foreach($TagAry as $tag){ ?>
+                                                        <li style="float:left;">
+                                                                <div class="pretty p-icon p-round p-pulse">
+                                                                    <input type="radio" name="tag" value="<?php echo $tag['id']; ?>">
+                                                                    <div class="state p-success">
+                                                                        <i class="icon mdi mdi-check"></i>
+                                                                        <label><a style="margin-top:5px;"><?php echo $tag['tag_name']; ?></a></label>
+                                                                    </div>
+                                                                </div>
+                                                        </li>
+                                                    <?php } ?>
+                                                    </ul>
+                                                    </div>
+                                                    <div class="clear"></div>
                                                     <input type="submit" class="btn btn-primary" 　name="btn1" value="投稿する">
                                                 </form>
                                             </div>
@@ -405,7 +413,7 @@ body {
                                     if (isset($tweetAry)):
                                         foreach ($tweetAry as $tweet):
                                     ?>
-                                    <table align="center" cellpadding="3" cellspacing="0">
+                                    <table cellpadding="3" cellspacing="0">
                                         <tbody>
                                             <!-- 記事エリア -->
                                             <div class="twitter__block">
@@ -414,16 +422,35 @@ body {
                                                 </figure>
                                                 <div class="twitter__block-text">
                                                     <div class="name">
-                                                        <?php echo $tweet['handle']; ?><span class="name_reply"></span></div>
+                                                        <?php echo $tweet['handle']; ?><span class="name_reply"><?php if($tweet['tag_name']!=NULL){ ?>
+                                                        <a class="btn btn-warning btn-sm iphone5" style="border-radius: 60px;" href="user_search.php" role="button">
+                                                            <?php echo $tweet['tag_name']; ?>
+                                                        </a>
+                                                    <?php }?></span></div>
                                                     <div class="date">10分前</div>
                                                     <div class="text">
-                                                        <?php echo $tweet['message']; ?>
+                                                        <?php echo $tweet['message']; ?><br/>
+                                                    <?php if($tweet['file']!="" || $tweet['file']!=NULL){ ?>
+                                                        <a href="img/<?php echo $tweet['file']; ?>" data-lightbox="<?php echo $tweet['file']; ?>">
+                                                        <img src="img/<?php echo $tweet['file']; ?>"width="100px">
+                                                    </a>
+                                                   <?php }?>
+
+
                                                     </div>
-                                                    <div class="twitter__icon">
+                                                    <div class="twitter__icon" style="float:left;">
                                                         <!--返信ゾーン-------------------------------------------------------------->
-                                                        <button class="btn btn-default" data-toggle="modal" data-target="#modal-sample<?php echo $tweet['id']; ?>">
-                                                            <span class="twitter-bubble"></span></button>
+                                                        <a data-toggle="modal" data-target="#modal-sample<?php echo $tweet['id']; ?>">
+                                                            <span class="twitter-bubble"></span></a>
                                                     </div>
+                                                    <div class="twitter__icon item<?PHP echo $tweet['id']; ?> <?PHP echo $tweet['favo_flg'] ? "on" : "off"; ?>" style="margin-left:3px;float:left;" onclick="toggleBookmark(<?PHP echo $tweet['id']; ?>,<?PHP echo $tweet['user_id']; ?>); return false;">
+                                                        <?PHP if($tweet['favo_flg'] == false){ ?>
+                                                            <span class="twitter-heart" ></span>
+                                                        <?php }else{ ?>
+                                                            <span class="twitter-heartON"></span>
+                                                        <?php } ?>
+                                                    </div>
+                                                    
                                                     <div align="right">
                                                         <span class="com_foot"> ...
                                                             <?php echo $tweet['dataTime']; ?></span>
@@ -433,7 +460,7 @@ body {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <td align="center">
+                                            <td>
                                                 <!-- 2.モーダルの配置 -->
                                                 <div class="modal" id="modal-sample<?php echo $tweet['id']; ?>" tabindex="-1">
                                                     <div class="modal-dialog">
@@ -448,7 +475,7 @@ body {
                                                             </div>
                                                             <!-- 5.モーダルのボディ -->
                                                             <div class="modal-body">
-                                                                <form method="POST" action="home.php">
+                                                                <form method="POST" action="profile.php">
                                                                     <textarea class="span4" name="contents2" autofocus rows="5" cols="40"></textarea><br>
                                                                     <input type="hidden" name="Replyid" value="<?php echo $tweet['id']; ?>">
                                                                     <br />
@@ -467,37 +494,36 @@ body {
                                     <?php
                                             if (isset($ReplyCNT)): //返信が存在しているか
                                                 foreach ($ReplyAry as $Reply):
-                                                    if ($tweet['id'] == $Reply['target_id']):  //返信先のIDと、送り先の無い投稿のIDが一致した場合
-                                    ?>
-                                    <table class=" table-responsive" align="center" cellpadding="3" cellspacing="0">
-                                        <tbody>
-                                            <div class="twitter__block" style="width:90%;margin-left:10%;">
-                                                <figure>
-                                                    <img src="img/<?php echo $Reply['img']; ?>" class="img-circle" width="30" />
-                                                </figure>
-                                                <div class="twitter__block-text">
-                                                    <div class="name">
-                                                        <?php echo $Reply['handle']; ?><span class="name_reply"></span></div>
-                                                    <div class="date">10分前</div>
-                                                    <div class="text">
-                                                        <?php echo $Reply['message']; ?>
-                                                    </div>
-                                                    <div class="twitter__icon">
+                                                    if ($tweet['id'] == $Reply['target_id']):  ?>
+                                                <table class=" table-responsive" align="center" cellpadding="3" cellspacing="0">
+                                                    <tbody>
+                                                        <div class="twitter__block" style="width:90%;margin-left:10%;">
+                                                            <figure>
+                                                                <img src="img/<?php echo $Reply['img']; ?>" class="img-circle" width="30" />
+                                                            </figure>
+                                                            <div class="twitter__block-text">
+                                                                <div class="name">
+                                                                    <?php echo $Reply['handle']; ?><span class="name_reply"></span></div>
+                                                                <div class="date">10分前</div>
+                                                                <div class="text">
+                                                                    <?php echo $Reply['message']; ?>
+                                                                </div>
+                                                                <div class="twitter__icon">
 
-                                                    </div>
-                                                    <div align="right">
-                                                        <span class="com_foot"> ...
-                                                            <?php echo $Reply['dataTime']; ?></span>
-                                                        <?php if ($Reply['user_id'] == $user) { //返信投稿が自分のかどうか判定?>
-                                                        [<a href="home.php?Auser=<?php echo $Reply['id']; ?>">削除</a>]
-                                                        <?php
-                                                              } //返信投稿が自分のか判定終わり?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </tbody>
-                                    </table>
-                                    <?php
+                                                                </div>
+                                                                <div align="right">
+                                                                    <span class="com_foot"> ...
+                                                                        <?php echo $Reply['dataTime']; ?></span>
+                                                                    <?php if ($Reply['user_id'] == $user) { //返信投稿が自分のかどうか判定?>
+                                                                    [<a href="home.php?Auser=<?php echo $Reply['id']; ?>">削除</a>]
+                                                                    <?php
+                                                                        } //返信投稿が自分のか判定終わり?>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </tbody>
+                                                </table>
+                                                <?php
                                                     endif; // if ($tweet['id'] == $Reply['target_id']):
                                                 endforeach; //foreach ($ReplyAry as $Reply):
                                             endif; // if (isset($ReplyCNT)):
@@ -508,98 +534,64 @@ body {
                                 <!--　▲タイムラインエリア ここまで -->
                             </div>
                             <!--　▲twitter風ここまで -->
-                            <!-- </td>
-                            </tr>
-                            </tbody>
-                            </table>横幅いっぱいまで表示したかったのでコメント化したよ、一応残しておく -->
-                            <!-- panel-body　閉じ -->
-
                         </div>
-                        <!--"tab-pane active" id="tabtest1" 閉じ -->
-                        <!------ フォローリストの表示---->
-                        <?php include 'home_tab2.php'; ?>
                         <!------ フォロワーリストの表---->
                         <?php include 'home_tab3.php'; ?>
                         <div class="tab-pane" id="tabtest4">
-                            <div class="panel panel-info">
-                                <div class="panel-body">
+                            <!-- ▼twitter風ここから -->
+                            <div class="twitter__container">
+                            <br />
+                                <!-- ▼タイムラインエリア scrollを外すと高さ固定解除 -->
+                                <div class="twitter__contents scroll">
+                                    <?php
+                                    if (isset($tweetAry)):
+                                        foreach ($tweetAry as $tweet): ?>
 
-                                    <form action="output.php" method="post">
-
-                                        <input type="submit" class="btn btn-success" value="アップロードページへ">
-                                    </form>
-                                    <div class="table-responsive">
-                                        <table class="table">
-
-                                            <tbody>
-
-                                                <?php for ($i = 0; $i < $imgCNT; ++$i): ?>
-                                                <tr>
-                                                    <td>
-                                                        <?php echo $imgAry[$i]['title']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <a class="btn btn-warning btn-sm iphone5" style="border-radius: 60px;" href="user_search.php?kensaku=<?php echo $TAG; ?>" role="button">
-                                                            <?php 
-                                                          //タグ番号を文字に変更
-                                                          $tagchain = $imgAry[$i]['tag_id'];
-                                                          $SqlRes = NGO("select * from tag where id = $tagchain");
-                                                          $row = $SqlRes->fetch(PDO::FETCH_ASSOC);
-                                                          echo $row['tag_name'];
-                                                            ?></a></td>
-                                                    <td><img src="img/<?php echo $imgAry[$i]['media']; ?>" width="100" /></td>
-                                                    <td>
-                                                        <p>
-                                                            <?php echo $imgAry[$i]['text']; ?>
-                                                        </p>
-                                                    </td>
-                                                    <td>
-                                                        <form method="post" action="profile.php#tabtest4" onsubmit="return submitChk()">
-                                                            <input type="hidden" name="deleteimg" class="btn btn-danger" value="<?php echo $imgAry[$i]['id']; ?>">
-                                                            <input type="submit" name="delete" class="btn btn-danger" value="削除">
-                                                        </form>
-                                                    </td>
-                                                    <td>
-
-                                                        <?php
-                                                          $flag = false;
-                                                          if (isset($FavocheckCNT)) {
-                                                              for ($j = 0; $j < $FavocheckCNT; ++$j):
-                                                                  if ($Favocheck[$j] == $imgAry[$i]['id']) {
-                                                                      $flag = true;
-                                                                  }
-                                                                  if ($flag == true) {
-                                                                      break;
-                                                                  }
-                                                              endfor;
-                                                          }
-
-                                                          if ($flag == true) {
-                                                        ?>
-                                                        <form method="post" action="home.php">
-                                                            <input type="hidden" name="anfavoID" value="<?php echo $imgAry[$i]['id']; ?>">
-                                                            <button class="none" type="submit">
-                                                                <img src="svg/twitter-heartON.svg" width="32" height="32">
-                                                            </button>
-                                                        </form>
-
-                                                        <?php
-                                                          } else {
-                                                        ?>
-                                                        <form method="post" action="home.php">
-                                                            <input type="hidden" name="favoID" value="<?php echo $imgAry[$i]['id']; ?>">
-                                                            <button class="none" type="submit">
-                                                                <img src="svg/twitter-heart.svg" width="32" height="32">
-                                                            </button>
-                                                        </form>
-                                                        <?php
-                                                          } ?>
-                                                    </td>
-                                                </tr>
-                                                <?php endfor; ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    <?php if($tweet['file']!="" || $tweet['file']!=NULL){ ?>
+                                    <table cellpadding="3" cellspacing="0">
+                                        <tbody>
+                                            <!-- 記事エリア -->
+                                            <div class="twitter__block">
+                                                <figure>
+                                                    <img src="img/<?php echo $tweet['img']; ?>" class="img-circle" width="30" />
+                                                </figure>
+                                                <div class="twitter__block-text">
+                                                    <div class="name">
+                                                        <?php echo $tweet['handle']; ?>
+                                                        <span class="name_reply"><?php if($tweet['tag_name']!=NULL){ ?>
+                                                            <a class="btn btn-warning btn-sm iphone5" style="border-radius: 60px;" href="user_search.php" role="button">
+                                                                <?php echo $tweet['tag_name']; ?>
+                                                            </a>
+                                                            <?php }?>
+                                                        </span>
+                                                    </div>
+                                                    <div class="date">10分前</div>
+                                                    <div class="text">
+                                                        <?php echo $tweet['message']; ?><br/>
+                                                        <a href="img/<?php echo $tweet['file']; ?>" data-lightbox="<?php echo $tweet['file']; ?>">
+                                                            <img src="img/<?php echo $tweet['file']; ?>"width="100px">
+                                                        </a>
+                                                            
+                                                    </div>
+                                                    
+                                                    <div align="right">
+                                                        <span class="com_foot"> ...
+                                                            <?php echo $tweet['dataTime']; ?></span>
+                                                        <?php if ($tweet['user_id'] == $user): //投稿が自分のかどうか?>
+                                                        [<a href="home.php?Auser=<?php echo $tweet['id']; ?>">削除</a>]
+                                                        <?php endif; //投稿が自分のかどうか判定終わり?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <?php }?>
+                                    <?php
+                                        endforeach; // foreach ($tweetAry as $tweet):
+                                    endif; //if (isset($tweetAry)):
+                                    ?>
                                 </div>
                             </div>
                         </div><!-- tab-contentの閉じ -->
@@ -608,9 +600,71 @@ body {
             </div><!-- col-xs-12の閉じ -->
         </div><!-- rowの閉じ -->
     </div><!-- containerの閉じ-->
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var url = document.location.toString();
+        if (url.match('#')) {
+            $('.nav-tabs a[href="#' + url.split('#')[1] + '"]').tab('show');
+            $('.nav-tabs a').removeClass('active');
+        }
+    });
 
+    $(document).on('change', ':file', function() {
+    var input = $(this),
+    numFiles = input.get(0).files ? input.get(0).files.length : 1,
+    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+    input.parent().parent().next(':text').val(label);
+});
+
+
+
+
+</script>
+<script>
+ $(function () {
+  searchWord = function(){
+    var searchText = $(this).val(), // 検索ボックスに入力された値
+        targetText;
+
+    $('.target-area li').each(function() {
+      targetText = $(this).text();
+
+      // 検索対象となるリストに入力された文字列が存在するかどうかを判断
+      if (targetText.indexOf(searchText) != -1) {
+        $(this).removeClass('hidden');
+      } else {
+        $(this).addClass('hidden');
+      }
+    });
+  };
+
+  // searchWordの実行
+  $('#search-text').on('input', searchWord);
+});
+</script>
+
+<script>
+    function toggleBookmark(itemId,userId){
+        var btn = $('.item'+itemId);
+        var Bookmarked = btn.hasClass('on');
+        $.post(
+            'favorite_ajax.php',
+            {'tweet_id':itemId, 'user_id':userId,'bookmark':Bookmarked?1:0, 'ajax':1},
+            function(response,status){
+                    if(Bookmarked){
+                        btn.removeClass('on');
+                        btn.addClass('off');
+                        btn.html('<span class="twitter-heart" ></span>');
+                    }else{
+                        btn.removeClass('off');
+                        btn.addClass('on');
+                        btn.html('<span class="twitter-heartON" ></span>');
+                    }
+            }
+        );
+    }
+</script>
 </html>

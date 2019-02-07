@@ -4,11 +4,9 @@ header("Content-Type:text/html; charset=UTF-8");
 session_start();
 include("parts/function.php");
 //ポストで来たかどうか判断//複数ファイル配列送信対策
-if (isset($_POST["output"])) {
-    $title = $_POST["title"];
-    $tag = $_POST["tag"];
-    $text = $_POST["text"];
-    $media = $_POST["title"];
+    $text = $_POST['contents'];
+    $tag_id = $_POST['tag'];
+    $time = date('Y-m-d H:i:s');
     $tempfile = $_FILES['fname']['tmp_name'];
     $filename = './img/' . $_FILES['fname']['name'];
     $name = $_FILES['fname']['name'];
@@ -32,9 +30,8 @@ $filename = $checkname;
 if (is_uploaded_file($tempfile)) {
     if (move_uploaded_file($tempfile, $filename)) {
         $user = $_SESSION['user'];
-        NGO("INSERT INTO `output`(`id`, `user_id`, `tag_id`, `title`, `media`, `text`)"
-                . " VALUES ('','$user','$tag','$title','$name','$text')");
-
+        NGO("insert into tweet_tbl values
+        (null,$user,null,'$text','$name',$tag_id,'$time')");
         
     } else {
         $elmsg = "ファイルをアップロードできません。";
@@ -43,8 +40,6 @@ if (is_uploaded_file($tempfile)) {
     $elmsg = "ファイルが選択されていません。";
 }
 
-header("Location:profile.php");
-   
-}
+header("Location: profile.php");
 
 ?>
