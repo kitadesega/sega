@@ -125,7 +125,7 @@ while ($row = $SqlRes->fetch(PDO::FETCH_ASSOC)) {
     //フォローしている人のユーザー情報を配列に入れる
     $followAry[] = $row;
 }
-//フォローしている人数のカウント
+//フォローしている人数のカウ
 if (isset($followAry)) {
     $followCNT = count($followAry);
     //フォローしている人数の表示用

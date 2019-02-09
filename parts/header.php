@@ -121,6 +121,7 @@
         /* send_flg が TRUEなら送信、FALSEなら送信しない */
         return flag;
     }
+    
 </script>
 
 <style>

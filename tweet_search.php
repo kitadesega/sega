@@ -42,36 +42,8 @@ if (isset($_POST['tag']) && is_array($_POST['tag'])) {
         ++$i;
     }
 
-    $SqlRes = NGO('select * from users ');
-
-    while ($user = $SqlRes->fetch(PDO::FETCH_ASSOC)) {
-        $users[] = $user;
-    }
-    if (isset($users)) {
-        $Numuser = count($users);
-        //カウント
-    }
-    $i = 0;
-    for ($i = 0; $i < $Numuser; ++$i) {
-        for ($j = 0; $j < 5; ++$j) {
-            if ($users[$i]['tag1'] == $sqltag[$j] || $users[$i]['tag2'] == $sqltag[$j] || $users[$i]['tag3'] == $sqltag[$j] ||
-                $users[$i]['tag4'] == $sqltag[$j] || $users[$i]['tag5'] == $sqltag[$j]) {
-                    $user_id = $users[$i]['user_id'];
-                    $SqlRes = NGO("select * from follows where user_id = $id AND follow_id = $user_id ");
-                    $usera = $SqlRes->fetch(PDO::FETCH_ASSOC);
-                
-                if($usera){
-                    $users[$i]["follow_flg"] = true;
-                }else{
-                    $users[$i]["follow_flg"] = false;
-                }
-                $userAry[] = $users[$i];
-                
-                
-                break;
-            }
-        }
-    }
+    $SqlRes=NGO("select * from tweet_tbl where tag_id = ");
+  
 }
 ?>
 <!DOCTYPE HTML>
@@ -117,10 +89,10 @@ overflow: auto;
         <form method="POST" action="user_search.php">
             <br/>
             <div class="text-center">
-                <a href="tweet_search.php" class="btn btn-warning btn-sm" role="button">投稿検索へ</a>
+                <a href="user_search.php" class="btn btn-warning btn-sm" role="button">ユーザー検索へ</a>
             </div>
                     <h1 style="text-align:center">
-                        <th style="text-align:center">ユーザー検索</th>
+                        <th style="text-align:center">投稿検索</th>
                     </h1>
                     <div style="text-align:center;">
                     <div class = "profile-edit-name">
