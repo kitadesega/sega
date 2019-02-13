@@ -5,12 +5,20 @@ session_start();
 include("parts/function.php");
 //ポストで来たかどうか判断//複数ファイル配列送信対策
     $text = $_POST['contents'];
-    $tag_id = $_POST['tag'];
+    if (isset($_POST['tag'])) {
+        $tag_id = $_POST['tag'];
+    }
     $time = date('Y-m-d H:i:s');
-    $tempfile = $_FILES['fname']['tmp_name'];
-    $filename = './img/' . $_FILES['fname']['name'];
-    $name = $_FILES['fname']['name'];
-    $fileext = substr($name, strrpos($name, "."));
+
+    if (isset($_FILES['fname']['tmp_name'])) {
+        $tempfile = $_FILES['fname']['tmp_name'];
+        $filename = './img/' . $_FILES['fname']['name'];
+        $name = $_FILES['fname']['name'];
+        $fileext = substr($name, strrpos($name, "."));
+    }else{
+        $name = NULL;
+    }
+    
 
 //正規表現で画像以外を弾く。
 if (!preg_match('/\.gif$|\.png$|\.jpg$|\.jpeg$|\.bmp$/i', $filename)) {

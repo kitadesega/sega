@@ -87,12 +87,14 @@ while ($Row = $SqlRes->fetch(PDO::FETCH_ASSOC)) {
     $Row["img"]     = $tmp_u_data["user_img"];
     //お気に入り判定
     $Row["favo_flg"] = false;
+    if(isset($My_favo)){
     for($i=0;$i<count($My_favo); $i++){
         if($Row["id"] == $My_favo[$i]["favorite_id"]){
             $Row["favo_flg"] = true;
             break;
         }
     }
+}
     if($Row["tag_id"]!="" || $Row["tag_id"]!=NULL){
         $tmp_tag        = $Row["tag_id"];
         $keyIndex       = array_search("$tmp_tag", array_column($all_tag, 'id'));
@@ -328,9 +330,11 @@ body {
             <tbody>
                 <!-- 記事エリア -->
                 <div class="twitter__block">
-                    <figure>
-                        <img src="img/<?php echo $tweet['img']; ?>" class="img-circle" width="30" />
-                    </figure>
+                    <div class="twitter__icon">
+                        <a href="afterU.php?Fuser=<?php echo $tweet['user_id']; ?>">
+                            <img src="img/<?php echo $tweet['img']; ?>" class="img-circle" width="30" />
+                        </a>
+                    </div>
                     <div class="twitter__block-text">
                         <div class="name">
                             <?php echo $tweet['handle']; ?><span class="name_reply"><?php if($tweet['tag_name']!=NULL){ ?>
@@ -351,10 +355,10 @@ body {
                         </div>
                         <div class="twitter__icon" style="float:left;">
                             <!--返信ゾーン-------------------------------------------------------------->
-                            <button data-toggle="modal" data-target="#modal-sample<?php echo $tweet['id']; ?>">
-                                <span class="twitter-bubble"></span></button>
+                            <div data-toggle="modal" data-target="#modal-sample<?php echo $tweet['id']; ?>"style="padding:5px;">
+                                <span style="display:inline-block"class="twitter-bubble"></span></div>
                         </div>
-                        <div class="twitter__icon item<?PHP echo $tweet['id']; ?> <?PHP echo $tweet['favo_flg'] ? "on" : "off"; ?>" style="margin-top:5px;float:left;" onclick="toggleBookmark(<?PHP echo $tweet['id']; ?>,<?PHP echo $tweet['user_id']; ?>); return false;">
+                        <div style="padding:5px;" class="twitter__icon item<?PHP echo $tweet['id']; ?> <?PHP echo $tweet['favo_flg'] ? "on" : "off"; ?>" style="margin-left:3px;float:left;" onclick="toggleBookmark(<?PHP echo $tweet['id']; ?>,<?PHP echo $tweet['user_id']; ?>); return false;">
                             <?PHP if($tweet['favo_flg'] == false){ ?>
                                 <span class="twitter-heart" ></span>
                             <?php }else{ ?>
@@ -409,9 +413,12 @@ body {
                     <table class=" table-responsive" align="center" cellpadding="3" cellspacing="0">
                         <tbody>
                             <div class="twitter__block" style="width:90%;margin-left:10%;">
-                                <figure>
-                                    <img src="img/<?php echo $Reply['img']; ?>" class="img-circle" width="30" />
-                                </figure>
+                                
+                                <div class="twitter__icon">
+                                    <a href="afterU.php?Fuser=<?php echo $Reply['user_id']; ?>">
+                                        <img src="img/<?php echo $Reply['img']; ?>" class="img-circle" width="30" />
+                                    </a>
+                                </div>
                                 <div class="twitter__block-text">
                                     <div class="name">
                                         <?php echo $Reply['handle']; ?><span class="name_reply"></span></div>

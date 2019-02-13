@@ -957,18 +957,18 @@ float:right;
 }
 
 .twitter__container .twitter__icon .twitter-bubble {
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     display: block;
     padding-left: 20px;
     background: url("../svg/twitter-bubble.svg") left no-repeat;
-    width: 20%;
+    
     float: left;
     color: #8a9aa4;
 }
 .twitter__container .twitter__icon .twitter-heart {
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     display: block;
     padding-left: 20px;
     background: url("../svg/twitter-heart.svg") left no-repeat;
@@ -979,8 +979,8 @@ float:right;
 
 
 .twitter__container .twitter__icon .twitter-heartON {
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     display: block;
     padding-left: 20px;
     background: url("../svg/twitter-heartON.svg") left no-repeat;
@@ -1002,7 +1002,19 @@ float:right;
 
 .nav-tabs>li>a {
     margin-right: 0px;
-    line-height: 1;
+    line-height: 1.5;
     border: 1px solid transparent;
     border-radius: 0px 0px 0 0;
+}
+.twitter__icon{
+    float:left;
+}
+.twitter__icon img{
+		padding:5px;
+		width: 6rem;
+		height: 6rem;
+		border-radius: 50%;
+		-moz-border-radius: 50%;
+		-webkit-border-radius: 50%;
+		object-fit: cover; /* ADD */
 }

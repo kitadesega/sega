@@ -410,11 +410,11 @@ a.disabled{
   /* コメントエリア */
   .line__container .line__right .text {
     padding: 10px;
-    padding-top:0px;
-	border-radius: 20px;
-	background-color: #BAE3F9;
-	margin: 0;
-	margin-left: 80px;
+    padding-top:10px;
+    border-radius: 20px;
+    background-color: #BAE3F9;
+    margin: 0;
+    margin-left: 80px;
   }
   
   /* 吹き出し */

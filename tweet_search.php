@@ -13,22 +13,17 @@ if (isset($TagAry)) {
 }
 
 //プロフィールからタグをクリックして遷移してきた時の検索処理
-if (isset($_GET['kensaku'])) {
-    $searchTAG = $_GET['kensaku'];
-    $SqlRes = NGO('select * from users ');
-    while ($user = $SqlRes->fetch(PDO::FETCH_ASSOC)) {
-        $users[] = $user;
+if (isset($_POST['tag'])) {
+    $search = $_POST['tag'];
+    $SqlRes = NGO("select * from tweet_tbl where tag_id = $search");
+    while ($row = $SqlRes->fetch(PDO::FETCH_ASSOC)) {
+        $SqlRes2    = NGO( "SELECT * FROM users WHERE user_id =" . $row['user_id'] . "" );
+        $tmp_user   = $SqlRes2->fetch( PDO::FETCH_ASSOC );
+        $row['username']    = $tmp_user['username'];
+        $row['user_img']    = $tmp_user['user_img'];
+        $tweet_Ary[] = $row;
     }
-    if (isset($users)) {
-        $Numuser = count($users);
-        //カウント
-    }
-    for ($i = 0; $i < $Numuser; ++$i) {
-        if ($users[$i]['tag1'] == $searchTAG || $users[$i]['tag2'] == $searchTAG || $users[$i]['tag3'] == $searchTAG ||
-            $users[$i]['tag4'] == $searchTAG || $users[$i]['tag5'] == $searchTAG) {
-            $userAry[] = $users[$i];
-        }
-    }
+    
 }
 //タグによるユーザー検索
 if (isset($_POST['tag']) && is_array($_POST['tag'])) {
@@ -37,12 +32,18 @@ if (isset($_POST['tag']) && is_array($_POST['tag'])) {
     $i = 0;
     foreach ($posttag as $value) {
         if ($i < $tagnum) {
-            $sqltag[$i] = $value;
+            $SqlRes = NGO("select * from tweet_tbl where tag_id = $value");
+            while ($row = $SqlRes->fetch(PDO::FETCH_ASSOC)) {
+                $SqlRes2    = NGO( "SELECT * FROM users WHERE user_id =" . $row['user_id'] . "" );
+                $tmp_user   = $SqlRes2->fetch( PDO::FETCH_ASSOC );
+                $row['username']    = $tmp_user['username'];
+                $row['user_img']    = $tmp_user['user_img'];
+                $tweet_Ary[] = $row;
+            }
         }
         ++$i;
     }
 
-    $SqlRes=NGO("select * from tweet_tbl where tag_id = ");
   
 }
 ?>
@@ -86,7 +87,7 @@ overflow: auto;
 </style>
 <div class="container">
     <div class="row">
-        <form method="POST" action="user_search.php">
+        <form method="POST" action="tweet_search.php">
             <br/>
             <div class="text-center">
                 <a href="user_search.php" class="btn btn-warning btn-sm" role="button">ユーザー検索へ</a>
@@ -128,37 +129,52 @@ overflow: auto;
             </div>
         </div>
         <div style="border-bottom:1px solid #c8c8c8; "></div>
-            <?php if (isset($userAry)) {
-                    foreach ($userAry as $value) {?>
-            <div class="search-user-container">
-                <div class="search-user-contents">
-                <div class="search-user-img">
-                    <a>
-                        <img src="img/<?php echo $value['user_img']; ?>" />
-                    </a>
-                </div>
-
-                    <strong><a style = "display:block;margin-top:-50px;margin-left:4.5em;"href="afterU.php?Fuser=<?php echo $value['user_id']; ?>" class="widelink" ><?php echo $value['username']; ?></a></strong>
-                    <div class="sh-text">
-                        <p>
-                            <?php echo $value['hitokoto']; ?>
-                        </p>
-                    </div>
-                </div>
-                <div class="search-follow artist<?PHP echo $value['user_id']; ?> <?PHP echo $value['follow_flg'] ? "on" : "off"; ?>"onclick="toggleFollow(<?PHP echo $value['user_id']; ?>); return false;">
-                    <?PHP if($value['follow_flg'] == false){ ?>
-                        <button type="submit" style = "width:80px"class="btn btn-info btn-sm btn-round btn-outline">フォロー</button>
-
-                    <?php }else{ ?>
-                        <button type="submit" style = "width:80px"class="btn btn-info btn-sm btn-round btn-outline info-active">フォロー中</button>
-                    <?php } ?>
-                </div>
-            </div>
-
-            <?php
-                    } 
-                }
-                ?>
+        <div class="twitter__container">
+        <?php if (isset($tweet_Ary)) {
+            foreach($tweet_Ary as $item_value){ ?>
+            <div class="twitter__contents">
+                <table cellpadding="3" cellspacing="0">
+                    <tbody>
+                        <!-- 記事エリア -->
+                        <div class="twitter__block">
+                            <div class="twitter__icon">
+                                <a href="afterU.php?Fuser=<?php echo $item_value['user_id']; ?>">
+                                    <img src="img/<?php echo $item_value['user_img']; ?>"/>
+                                </a>
+                            </div>
+                            <div class="twitter__block-text">
+                                <div class="name">
+                                    <?php echo $item_value['handle']; ?>
+                                    <span class="name_reply"><?php if($item_value['tag_name']!=NULL){ ?>
+                                        <a class="btn btn-warning btn-sm iphone5" style="border-radius: 60px;" href="user_search.php" role="button">
+                                            <?php echo $item_value['tag_name']; ?>
+                                        </a>
+                                        <?php }?>
+                                    </span>
+                                </div>
+                                <div class="date">10分前</div>
+                                <div class="text">
+                                    <?php echo $item_value['message']; ?><br/>
+                                    <a href="img/<?php echo $item_value['file']; ?>" data-lightbox="<?php echo $item_value['file']; ?>">
+                                        <img src="img/<?php echo $item_value['file']; ?>"width="100px">
+                                    </a>
+                                        
+                                </div>
+                                
+                                <div align="right">
+                                    <span class="com_foot"> ...
+                                        <?php echo $item_value['dataTime']; ?></span>
+                                    <?php if ($item_value['user_id'] == $user): //投稿が自分のかどうか?>
+                                    [<a href="home.php?Auser=<?php echo $tweet['id']; ?>">削除</a>]
+                                    <?php endif; //投稿が自分のかどうか判定終わり?>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </tbody>
+                </table>
+            </div>                   <?php } }?>
+         </div>
     </div>
 </div>
 <?php }else{ ?>
@@ -217,39 +233,51 @@ overflow: auto;
                     </div>
                 </div>
                 <div class="panel-body">
-                    <!-- 検索結果のユーザー一覧表示 -->
-                    <?php if (isset($userAry)) {
-                    ?>
-                    <?php foreach ($userAry as $value) {
-                        ?>
-
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th class="col-xs-2">なまえ</th>
-                                <th class="col-xs-4">あいこん</th>
-                                <th class="col-xs-6">ひとこと</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <a href="afterU.php?Fuser=<?php echo $value['user_id']; ?>" class="widelink">
-                                        <?php echo $value['username']; ?>
-                                    </a>
-                                </td>
-                                <td><img src="img/<?php echo $value['user_img']; ?>" width="100" /></td>
-                                <td>
-                                    <?php echo $value['hitokoto']; ?>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <?php
-                                } ?>
-                        <?php
-                            }?>
+                    <div class="twitter__container">
+                    <?php 
+                    if (isset($tweet_Ary)) {
+                        foreach($tweet_Ary as $item_value){ ?>
+                        <div class="twitter__contents">
+                            <table cellpadding="3" cellspacing="0">
+                                <tbody>
+                                    <!-- 記事エリア -->
+                                    <div class="twitter__block">
+                                        <div class="twitter__icon">
+                                            <img src="img/<?php echo $item_value['user_img']; ?>" class="img-circle" width="30" />
+                                        </div>
+                                        <div class="twitter__block-text">
+                                            <div class="name">
+                                                <?php echo $item_value['handle']; ?>
+                                                <span class="name_reply"><?php if($item_value['tag_name']!=NULL){ ?>
+                                                    <a class="btn btn-warning btn-sm iphone5" style="border-radius: 60px;" href="user_search.php" role="button">
+                                                        <?php echo $item_value['tag_name']; ?>
+                                                    </a>
+                                                    <?php }?>
+                                                </span>
+                                            </div>
+                                            <div class="date">10分前</div>
+                                            <div class="text">
+                                                <?php echo $item_value['message']; ?><br/>
+                                                <a href="img/<?php echo $item_value['file']; ?>" data-lightbox="<?php echo $item_value['file']; ?>">
+                                                    <img src="img/<?php echo $item_value['file']; ?>"width="100px">
+                                                </a>
+                                                    
+                                            </div>
+                                            
+                                            <div align="right">
+                                                <span class="com_foot"> ...
+                                                    <?php echo $item_value['dataTime']; ?></span>
+                                                <?php if ($item_value['user_id'] == $user): //投稿が自分のかどうか?>
+                                                [<a href="home.php?Auser=<?php echo $tweet['id']; ?>">削除</a>]
+                                                <?php endif; //投稿が自分のかどうか判定終わり?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </tbody>
+                            </table>
+                        </div>                   <?php } }?>
+                    </div>
                 </div>
             </div>
         </div>

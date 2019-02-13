@@ -8,7 +8,7 @@ include("../parts/function.php");
 
 
 //タグの情報取り出し
-$SqlRes = NGO("select * from tag");
+$SqlRes = NGO("select * from tag where Decision = '0'");
 while ($Row = $SqlRes->fetch(PDO::FETCH_ASSOC)) {
     $TagAry[] = $Row;
 }
@@ -16,20 +16,28 @@ if (isset($TagAry)) {
     $NumTag = count($TagAry);
 }
 
-//左側のタグを受け取り
-if (isset($_POST['lefttag'])) {
-    $left = $_POST['lefttag'];
-    
+$SqlRes = NGO("select * from tag where Decision = '1'");
+while ($Row = $SqlRes->fetch(PDO::FETCH_ASSOC)) {
+    $NotTagAry[] = $Row;
+}
+if (isset($TagAry)) {
+    $NotNumTag = count($NotTagAry);
 }
 
-//右側のタグを受け取り
-if (isset($_POST['righttag'])) {
-    $right = $_POST['righttag'];
-   
+
+
+//タグの復活処理
+if (isset($_POST['nottag'])) {
+    $nottag = $_POST['nottag'];
+    NGO("update tag set Decision = '0' where id = $nottag");
+    header("Location: tag_join.php");
 }
+
 
 //ユーザーのタグ結合処理
 if (isset($_POST['righttag']) && isset($_POST['lefttag'])){
+    $left = $_POST['lefttag'];
+    $right = $_POST['righttag'];
 NGO("update users set tag1 = '$right' where tag1 = $left;");
 NGO("update users set tag2 = '$right' where tag2 = $left;");
 NGO("update users set tag3 = '$right' where tag3 = $left;");
@@ -50,6 +58,9 @@ NGO("update users set tag3 = '0' where tag3 = tag5;");
 
 NGO("update users set tag4 = '0' where tag4 = tag5;");
 
+NGO("update tag set Decision = '1' where id = $left");
+
+header("Location: tag_join.php");
 }
 
 ?>
@@ -75,13 +86,13 @@ NGO("update users set tag4 = '0' where tag4 = tag5;");
             <!-- Team Members Row -->
             <div class="row">
                 <div class="col-lg-12">
-                    <h2 class="my-4">左の選択タグを右の選択タグへ結合</h2>
+                    <h2 class="my-4"></h2>
                 </div>
                 <div class="col-lg-5 col-sm-5 text-center mb-4">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th class="text-center" COLSPAN="4">OLD TAG</th>
+                                <th class="text-center" COLSPAN="4">不要なタグ</th>
                             </tr>
                         </thead>
                         <form method="POST" action="tag_join.php">
@@ -111,15 +122,15 @@ NGO("update users set tag4 = '0' where tag4 = tag5;");
                             </tbody>
                     </table>
                 </div>
-               <div class="col-lg2 col-sm-2 text-center mb-4">
+               <div class="col-lg2 col-sm-2 text-center mb-4" style="margin-left:70px;margin-top:80px">
                    <h1>→</h1>
                </div>
                 <!-- ここから右側のタグ -->
-                <div class="col-lg-5 col-sm-5 text-center mb-4">
+                <div class="col-lg-4 col-sm-4 text-center mb-4" style="">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th class="text-center" COLSPAN="4">NEW TAG</th>
+                                <th class="text-center" COLSPAN="4">結合先タグ</th>
                             </tr>
                         </thead>
                      
@@ -148,14 +159,51 @@ NGO("update users set tag4 = '0' where tag4 = tag5;");
                                 <?php } ?>
                             </tbody>
                     </table>
-                    <div class="button_wrapper">
+                    
+                </div>
+                
+            </div>
+            <div style="text-align:center;margin-left:150px">
                         <input type="submit" class="btn btn-danger" value="タグ結合">
                         </form></div>
-                </div>
-            </div>
             <br/>
-
-
+            <form method="POST" action="tag_join.php">
+            <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="text-center" COLSPAN="4">使用不可のタグ</th>
+                            </tr>
+                        </thead>
+                        <form method="POST" action="tag_join.php">
+                            <tbody>
+                                <?php for ($i = 0; $i < $NotNumTag; $i = $i + 4) { ?>
+                                    <tr>
+                                        <?php
+                                        $z = 0;
+                                        while ($z < 4 && ($i + $z < $NotNumTag)) {
+                                            ?>
+                                            <td class="text-left">
+                                                <div class="pretty p-icon p-round p-pulse">
+                                                    <input type="radio" name="nottag"
+                                                           value="<?php echo $NotTagAry[$i + $z]['id'] ?>"/>
+                                                    <div class="state p-success">
+                                                        <i class="icon mdi mdi-check"></i>
+                                                        <label><?php echo $NotTagAry[$i + $z]['tag_name'] ?></label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <?php
+                                            $z++;
+                                        }
+                                        ?>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                    </table>
+                    <div style="text-align:center">
+                        <input type="submit" class="btn btn-danger" value="タグを使用可能にする">
+                    </div>
+                    </form>
         </div>
         <!-- /.container -->
 

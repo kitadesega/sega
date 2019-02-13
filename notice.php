@@ -96,8 +96,6 @@ body {
                     echo "<strong>".$item_value['username']."</strong>";
                     echo "さんがあなたの投稿にいいねいしました。";
                     ?>
-
-
                             <br />
                                 <!-- ▼タイムラインエリア scrollを外すと高さ固定解除 -->
                                 <div class="twitter__contents">
@@ -139,13 +137,7 @@ body {
                                            
                                         </tbody>
                                     </table>
-                                   
-                                    
                                 </div>
-                            
-
-
-
               <?php  } ?>
             </div>
         </div>
