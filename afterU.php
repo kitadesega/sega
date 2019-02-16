@@ -9,7 +9,8 @@ if (isset( $_POST["user"])) {
     $my = $_SESSION['user'];
     $user = $_POST["user"];
 
-    NGO( "INSERT INTO follows ( user_id,follow_id ) VALUES ( '$my','$user' ) ;" );
+	NGO( "INSERT INTO follows ( user_id,follow_id ) VALUES ( '$my','$user' ) ;" );
+	NGO( "INSERT INTO notice ( user_id,target_id ) VALUES ( '$my','$user' ) ;" );
 
     header( "Location: afterU.php" );
 }
@@ -312,12 +313,12 @@ while ($output = $OMG->fetch(PDO::FETCH_ASSOC)) {
 				<?php if($sonzai < 1 ){ ?>
 					<form method="post" action="afterU.php">
 						<input type="hidden" name="user" value="<?php echo $user_id; ?>">
-						<button type="submit" class="btn btn-info">フォロー解除</button>
+						<button type="submit" class="btn btn-info">フォロー</button>
 					</form>
 				<?php }else{ ?>
 					<form method="post" action="afterU.php">
 						<input type="hidden" name="anuser" value="<?php echo $user_id; ?>">
-						<button type="submit" class="btn btn-success">フォロー</button>
+						<button type="submit" class="btn btn-success">フォロー解除</button>
 					</form>
 				<?php } 
 			}?>
@@ -337,7 +338,7 @@ while ($output = $OMG->fetch(PDO::FETCH_ASSOC)) {
                 <p><a href="<?php echo $githubURL; ?>"><?php echo $githubURL; ?></a></p>
             </div>
 
-            <div class = "myprofile-info">
+            <div class = "myprofile-info"style="word-wrap: break-word;">
                 <a>紹介文</a>
                 <p><?php echo nl2br($hitokoto); ?></p>
             </div>
@@ -412,8 +413,8 @@ while ($output = $OMG->fetch(PDO::FETCH_ASSOC)) {
 								<!-- ▼タイムラインエリア scrollを外すと高さ固定解除 -->
 								<div class="twitter__contents scroll">
                                     <?php
-                                    if (isset($tweetAry)):
-                                        foreach ($tweetAry as $tweet):
+                                    if (isset($ALLtweet)):
+                                        foreach ($ALLtweet as $tweet):
                                     ?>
                                     <table cellpadding="3" cellspacing="0">
                                         <tbody>

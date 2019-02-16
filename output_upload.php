@@ -16,7 +16,7 @@ include("parts/function.php");
         $name = $_FILES['fname']['name'];
         $fileext = substr($name, strrpos($name, "."));
     }else{
-        $name = NULL;
+        $name = "NULL";
     }
     
 
@@ -37,17 +37,17 @@ while (file_exists($checkname)) {
 $filename = $checkname;
 if (is_uploaded_file($tempfile)) {
     if (move_uploaded_file($tempfile, $filename)) {
-        $user = $_SESSION['user'];
-        NGO("insert into tweet_tbl values
-        (null,$user,null,'$text','$name',$tag_id,'$time')");
+
         
     } else {
-        $elmsg = "ファイルをアップロードできません。";
+        $name = "";
     }
 } else {
-    $elmsg = "ファイルが選択されていません。";
+    $name = "";
 }
-
+$user = $_SESSION['user'];
+NGO("insert into tweet_tbl values
+(null,$user,null,'$text','$name',$tag_id,'$time')");
 header("Location: profile.php");
 
 ?>

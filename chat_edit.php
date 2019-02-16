@@ -133,7 +133,7 @@ ul {
                                     <?php foreach($TagAry as $tag){ ?>
                                         <li style="float:left;">
                                             <div class="pretty p-icon p-round p-pulse">
-                                                <input type="radio" name="TAGsearch" value="<?php echo $tag['id']; ?>">
+                                                <input type="radio" name="tag" value="<?php echo $tag['id']; ?>">
                                                 <div class="state p-success">
                                                     <i class="icon mdi mdi-check"></i>
                                                     <label><a style="margin-top:5px;"><?php echo $tag['tag_name']; ?></a></label>

@@ -155,9 +155,11 @@ overflow: auto;
                                 <div class="date">10分前</div>
                                 <div class="text">
                                     <?php echo $item_value['message']; ?><br/>
+                                    <?php if($tweet['file']!="" || $tweet['file']!=NULL){ ?>
                                     <a href="img/<?php echo $item_value['file']; ?>" data-lightbox="<?php echo $item_value['file']; ?>">
                                         <img src="img/<?php echo $item_value['file']; ?>"width="100px">
                                     </a>
+                                    <?php } ?>
                                         
                                 </div>
                                 

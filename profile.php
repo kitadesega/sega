@@ -65,7 +65,7 @@ while ($Row = $SqlRes->fetch(PDO::FETCH_ASSOC)) {
     $all_tag[] = $Row;
 }
 //宛先無しの投稿を全て取り出す
-$SqlRes = NGO("select * from tweet_tbl where target_id IS NULL AND user_id = $user order by dataTime desc ;");
+$SqlRes = NGO("select * from tweet_tbl where target_id IS NULL order by dataTime desc ;");
 while ($Row = $SqlRes->fetch(PDO::FETCH_ASSOC)) {
     $SqlRes2        = NGO("select * from users where user_id = " . $Row['user_id'] . "");
     $tmp_u_data     = $SqlRes2->fetch(PDO::FETCH_ASSOC);
@@ -89,15 +89,19 @@ while ($Row = $SqlRes->fetch(PDO::FETCH_ASSOC)) {
         $Row['tag_name'] = NULL;
     }
     //タグの名前
+    if($Row['user_id']==$user){
+    $Mytweet[] = $Row;
+    }
     $ALLtweet[] = $Row;
 }
 if(isset($ALLtweet)){
-    foreach($ALLtweet as $tweet){
+    foreach($ALLtweet as $i => $tweet){
         if($tweet['favo_flg']==true){
-            $Favotweet[] = $tweet;
+            $Favotweet[$i] = $tweet;
         }
     }
 }
+
 if (isset($ALLtweet)) {
     //投稿の数をカウント
     $ALLtweetCNT = count($ALLtweet);
@@ -276,7 +280,7 @@ ul {
                 <p><a href="<?php echo $githubURL; ?>"><?php echo $githubURL; ?></a></p>
             </div>
 
-            <div class = "myprofile-info">
+            <div class = "myprofile-info" style="word-wrap: break-word;">
                 <a>紹介文</a>
                 <p><?php echo nl2br($hitokoto); ?></p>
             </div>

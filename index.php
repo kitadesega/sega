@@ -85,7 +85,7 @@ if (isset($_POST['login'])) {
     </div>
     <div style="float:right;padding-right:30%;">
 	<button type="submit" class="btn btn-success" name="login">ログイン</button>
-	<a href="register.php"><button type="submit" class="btn btn-info" name="login">会員登録はこちら</button></a></div>
+	<a href="register.php">会員登録はこちら</a></div>
 </form>
 </div>
 

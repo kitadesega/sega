@@ -30,12 +30,14 @@ if (isset($_POST['tag']) && is_array($_POST['tag'])) {
     $posttag = $_POST['tag'];
     $tagnum = count($posttag);
     $i = 0;
-    $sqltag[] = ['a', 'a', 'a', 'a', 'a'];
-    foreach ($posttag as $value) {
-        if ($i < $tagnum) {
-            $sqltag[$i] = $value;
-        }
-        ++$i;
+    $sqltag[0]=0;
+    $sqltag[1]=0;
+    $sqltag[2]=0;
+    $sqltag[3]=0;
+    $sqltag[4]=0;
+    for($i=0;$i<$tagnum;++$i){
+            $sqltag[$i] = $posttag[$i];
+        
     }
     NGO("update users set tag1 = '$sqltag[0]',tag2 = '$sqltag[1]',tag3 = '$sqltag[2]',tag4 = '$sqltag[3]',tag5 = '$sqltag[4]'"
             ."where user_id = '$user'");
@@ -62,9 +64,17 @@ if (isset($_POST['tagedit'])) {
 
     //重複するタグが無ければタグを作成
     if ($X == false) {
-        NGO("INSERT INTO `tag`( `id`, `tag_name` ) VALUES ( '','$tagedit' )");
+        NGO("INSERT INTO tag (
+            tag_name,
+            Decision
+          )
+          VALUES
+          (  '$tagedit',
+             '0'
+          )");
         header('Location: tagdisp.php');
     }
+    
 }
 ?>
 <!doctype html>

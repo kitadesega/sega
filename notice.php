@@ -103,9 +103,10 @@ body {
                                         <tbody>
                                             <!-- 記事エリア -->
                                             <div class="twitter__block">
-                                                <figure>
-                                                    <img src="img/<?php echo $item_value['user_img']; ?>" class="img-circle" width="30" />
-                                                </figure>
+                                            <div class="notice-icon-top">
+                                                
+                                                    <img src="img/<?php echo $item_value['user_img']; ?>"/>
+                                            </div>
                                                 <div class="twitter__block-text">
                                                     <div class="name">
                                                         <?php echo $item_value['handle']; ?>
@@ -116,13 +117,14 @@ body {
                                                             <?php }?>
                                                         </span>
                                                     </div>
-                                                    <div class="date">10分前</div>
                                                     <div class="text">
-                                                        <?php echo $item_value['message']; ?><br/>
+                                                        <?php echo $item_value['message']; ?>
+                                                        <?php if($item_value['file']!="" || $item_value['file']!=NULL){ ?>
+                                                            <br/>
                                                         <a href="img/<?php echo $item_value['file']; ?>" data-lightbox="<?php echo $item_value['file']; ?>">
                                                             <img src="img/<?php echo $item_value['file']; ?>"width="100px">
                                                         </a>
-                                                            
+                                                        <?php } ?>
                                                     </div>
                                                     
                                                     <div align="right">
